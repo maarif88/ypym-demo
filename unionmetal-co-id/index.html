@@ -414,25 +414,19 @@
       </div>
 
       <!-- Bottom strip -->
-      <div class="border-t border-white/12 px-4 sm:px-6 lg:px-12 xl:px-16 py-3 sm:py-4">
-        <div class="flex items-center gap-3 sm:gap-5">
+      <div class="px-4 sm:px-6 lg:px-12 xl:px-16 pb-4 sm:pb-6">
 
-          <!-- Slide label (hidden on xs) -->
-          <div class="hidden sm:flex items-center gap-2 shrink-0 min-w-0 max-w-[170px] lg:max-w-[210px]">
-            <span id="slide-label" class="text-white/45 text-[12px] sm:text-[12.5px] truncate"></span>
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"
-                 class="shrink-0 opacity-30" aria-hidden="true">
-              <path d="M2 6.5h9M8 3.5 11 6.5 8 9.5" stroke="white" stroke-width="1.4"
-                    stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-
-          <!-- Thumbnail row -->
-          <div id="thumbnails"
-               class="flex gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar flex-1">
-          </div>
-
+        <!-- Single progress line (delimiter) -->
+        <div class="w-full h-[2px] bg-white/15 rounded-full mb-3 overflow-hidden">
+          <div class="tprog" id="hero-prog" style="--dur:5200ms; background:white;"></div>
         </div>
+
+        <!-- Thumbnail row — right-aligned -->
+        <div class="flex justify-end">
+          <div id="thumbnails" class="flex gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar">
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -745,7 +739,6 @@
     const cardCtaText  = document.getElementById('card-cta-text');
     const heroHl       = document.getElementById('hero-hl');
     const heroHlMob    = document.getElementById('hero-hl-mob');
-    const slideLabel   = document.getElementById('slide-label');
 
     /* ── Build slide backgrounds ─────────────────────────────── */
     SLIDES.forEach((s, i) => {
@@ -763,23 +756,15 @@
         const isActive = i === current;
         const btn = document.createElement('button');
         btn.className = [
-          'thumb-btn relative shrink-0 rounded-[10px] overflow-hidden cursor-pointer',
-          'focus:outline-none focus-visible:ring-2 focus-visible:ring-white',
-          'transition-all duration-300',
-          isActive
-            ? 'ring-2 ring-white ring-offset-0 opacity-100 scale-100'
-            : 'opacity-45 hover:opacity-70 scale-100',
+          'thumb-btn relative shrink-0 rounded-[8px] overflow-hidden cursor-pointer',
+          'focus:outline-none transition-all duration-300',
+          isActive ? 'opacity-100' : 'opacity-40 hover:opacity-70',
         ].join(' ');
         btn.style.cssText = 'width:70px;height:46px;';
         btn.setAttribute('aria-label', `Slide ${i + 1}`);
         btn.innerHTML = `
           <img src="${s.thumb}" alt="" loading="${i === 0 ? 'eager' : 'lazy'}"
-               class="w-full h-full object-cover">
-          <div class="absolute inset-0 transition-opacity duration-300 bg-black"
-               id="tov-${i}" style="opacity:${isActive ? 0 : 0.35}"></div>
-          <div class="absolute bottom-0 left-0 right-0 h-[3px] bg-white/20">
-            <div class="tprog" id="tprog-${i}" style="--dur:${DURATION}ms"></div>
-          </div>`;
+               class="w-full h-full object-cover">`;
         btn.addEventListener('click', () => goTo(i));
         thumbsEl.appendChild(btn);
       });
@@ -792,7 +777,6 @@
       cardTitle.textContent   = id ? (s.title_id   || s.title)   : s.title;
       cardDesc.textContent    = id ? (s.desc_id    || s.desc)    : s.desc;
       cardCtaText.textContent = id ? (s.cta_id     || s.cta)     : s.cta;
-      slideLabel.textContent  = id ? (s.label_id   || s.label)   : s.label;
       const hl = id ? (s.heading_id || s.heading) : s.heading;
       heroHl.textContent    = hl;
       heroHlMob.textContent = hl;
@@ -857,16 +841,13 @@
       /* Update thumbnails */
       thumbsEl.querySelectorAll('.thumb-btn').forEach((btn, i) => {
         const on = i === idx;
-        btn.classList.toggle('ring-2', on);
-        btn.classList.toggle('ring-white', on);
         btn.classList.toggle('opacity-100', on);
-        btn.classList.toggle('opacity-45', !on);
-        const ov = document.getElementById(`tov-${i}`);
-        if (ov) ov.style.opacity = on ? '0' : '0.35';
-        /* Reset progress bars */
-        const bar = document.getElementById(`tprog-${i}`);
-        if (bar) { bar.classList.remove('is-running'); bar.style.width = '0'; void bar.offsetWidth; }
+        btn.classList.toggle('opacity-40', !on);
       });
+
+      /* Reset single progress bar */
+      const heroBar = document.getElementById('hero-prog');
+      if (heroBar) { heroBar.classList.remove('is-running'); heroBar.style.width = '0'; void heroBar.offsetWidth; }
 
       /* Fade in new content after brief delay */
       setTimeout(() => {
@@ -876,9 +857,9 @@
         heroHlMob.classList.remove('is-out');
         transitioning = false;
 
-        /* Start progress bar */
-        const bar = document.getElementById(`tprog-${idx}`);
-        if (bar) { void bar.offsetWidth; bar.classList.add('is-running'); }
+        /* Start single progress bar */
+        const heroBar = document.getElementById('hero-prog');
+        if (heroBar) { void heroBar.offsetWidth; heroBar.classList.add('is-running'); }
 
         startAuto();
       }, 380);
@@ -954,8 +935,8 @@
     buildThumbs();
     setLang('id'); /* init with Bahasa Indonesia */
     setTimeout(() => {
-      const bar = document.getElementById('tprog-0');
-      if (bar) { void bar.offsetWidth; bar.classList.add('is-running'); }
+      const heroBar = document.getElementById('hero-prog');
+      if (heroBar) { void heroBar.offsetWidth; heroBar.classList.add('is-running'); }
       startAuto();
       transitioning = false;
     }, 120);
