@@ -216,15 +216,7 @@
           <!-- Right: Phone + Lang switcher + CTA -->
           <div class="flex items-center gap-2 sm:gap-3">
 
-            <!-- Phone number (desktop) -->
-            <a href="tel:+622112345678"
-               class="hidden lg:flex items-center gap-1.5 text-white/50 hover:text-white transition-colors duration-200 whitespace-nowrap">
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M14.5 11.5v2a1 1 0 0 1-1.09 1A13.9 13.9 0 0 1 7.4 12 13.7 13.7 0 0 1 4 8.6 13.9 13.9 0 0 1 1.5 2.59a1 1 0 0 1 1-1.09h2a1 1 0 0 1 1 .86c.065.5.186.99.36 1.46a1 1 0 0 1-.22 1.06L4.6 5.93a11 11 0 0 0 5.47 5.47l1.05-1.05a1 1 0 0 1 1.06-.23c.47.175.96.296 1.46.36a1 1 0 0 1 .86 1.02z"
-                      stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <span class="text-[12.5px] font-medium">+62 21 1234 5678</span>
-            </a>
+            <!-- Phone number (desktop) removed - moved to layer 2 -->
 
             <!-- Delimiter -->
             <div class="hidden lg:block w-px h-5 bg-white/15 shrink-0"></div>
@@ -265,7 +257,20 @@
     <div id="usp-strip">
       <div class="glass-nav-dark-sub border-b border-white/8">
       <div class="max-w-screen-xl mx-auto px-4 sm:px-6 xl:px-10">
-        <div class="hidden sm:flex items-center justify-center gap-6 md:gap-10 lg:gap-14 h-[34px]">
+        <div class="hidden sm:flex items-center justify-between h-[34px]">
+
+          <!-- Left: phone number -->
+          <a href="tel:+622112345678"
+             class="flex items-center gap-1.5 text-white/50 hover:text-white transition-colors duration-200 whitespace-nowrap shrink-0">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M14.5 11.5v2a1 1 0 0 1-1.09 1A13.9 13.9 0 0 1 7.4 12 13.7 13.7 0 0 1 4 8.6 13.9 13.9 0 0 1 1.5 2.59a1 1 0 0 1 1-1.09h2a1 1 0 0 1 1 .86c.065.5.186.99.36 1.46a1 1 0 0 1-.22 1.06L4.6 5.93a11 11 0 0 0 5.47 5.47l1.05-1.05a1 1 0 0 1 1.06-.23c.47.175.96.296 1.46.36a1 1 0 0 1 .86 1.02z"
+                    stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="text-[11.5px] font-medium">+62 21 1234 5678</span>
+          </a>
+
+          <!-- Right: USP items -->
+          <div class="flex items-center gap-6 md:gap-10">
 
           <div class="flex items-center gap-1.5 shrink-0">
             <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
@@ -295,6 +300,7 @@
             <span class="text-white/65 text-[11.5px] font-semibold" data-en="500+ Project Clients" data-id="500+ Klien Proyek">500+ Klien Proyek</span>
           </div>
 
+          </div><!-- end USP items -->
         </div>
       </div>
       </div>
