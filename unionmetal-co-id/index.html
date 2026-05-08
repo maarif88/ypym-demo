@@ -653,6 +653,136 @@
   </section>
 
   <!-- ============================================================
+       SECTION 4 — PRODUCT BENTO GRID
+  ============================================================ -->
+  <section class="bg-[#F5F5F5] py-16 sm:py-20 lg:py-28">
+    <div class="max-w-screen-xl mx-auto px-5 sm:px-8 xl:px-12">
+
+      <!-- Header -->
+      <div class="text-center mb-12 lg:mb-16">
+        <p class="text-[#E8650A] text-[11.5px] font-bold tracking-[0.2em] uppercase mb-3">Our Products</p>
+        <h2 class="text-[#161616] font-heading font-normal leading-[1.1] tracking-[-0.02em]
+                   text-[32px] sm:text-[40px] lg:text-[50px] max-w-[640px] mx-auto">
+          Quality Steel Building Material
+        </h2>
+        <div class="w-16 h-[2px] bg-[#E8650A] mx-auto mt-5"></div>
+      </div>
+
+      <!-- Bento grid — 2×2 on desktop, stacked on mobile -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+
+        <!-- Card 1: Atap & Dinding (large photo left, text overlay) -->
+        <a href="#"
+           class="group relative rounded-2xl overflow-hidden block"
+           style="min-height: 340px;">
+          <img src="https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=900&h=600&dpr=1"
+               alt="Atap dan Dinding" loading="lazy"
+               class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-7">
+            <h3 class="text-white font-bold text-[22px] sm:text-[26px] tracking-[-0.01em] font-heading mb-1">
+              Roofing &amp; Wall Cladding
+            </h3>
+            <p class="text-white/70 text-[13.5px] leading-[1.6] max-w-[360px]">
+              Long-span corrugated &amp; trapezoidal steel sheets for roofs and facades — weather-resistant, lightweight, and ISO-certified.
+            </p>
+            <span class="inline-flex items-center gap-1.5 mt-4 text-[#E8650A] text-[13px] font-semibold
+                         group-hover:gap-3 transition-all duration-200">
+              Detail Products
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2 7h10M8 4l3 3-3 3" stroke="#E8650A" stroke-width="1.5"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- Card 2: Konstruksi Baja (light bg, text left + photo right) -->
+        <a href="#"
+           class="group relative rounded-2xl overflow-hidden block bg-white"
+           style="min-height: 340px;">
+          <img src="https://images.pexels.com/photos/1117452/pexels-photo-1117452.jpeg?auto=compress&cs=tinysrgb&w=900&h=600&dpr=1"
+               alt="Konstruksi Baja" loading="lazy"
+               class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-30 group-hover:scale-105 transition-all duration-700">
+          <div class="relative z-10 p-6 sm:p-7 flex flex-col justify-between h-full" style="min-height:340px;">
+            <div>
+              <span class="inline-block bg-[#FFF3EC] text-[#E8650A] text-[11px] font-bold tracking-[0.15em] uppercase
+                           px-3 py-1 rounded-full mb-4">Steel Structure</span>
+              <h3 class="text-[#161616] font-bold text-[22px] sm:text-[26px] tracking-[-0.01em] font-heading mb-2">
+                Steel Construction
+              </h3>
+              <p class="text-[#525252] text-[13.5px] leading-[1.65] max-w-[340px]">
+                C-purlins, Z-purlins, and cold-formed sections engineered for load-bearing performance across Indonesia's largest infrastructure projects.
+              </p>
+            </div>
+            <span class="inline-flex items-center gap-1.5 mt-6 px-5 py-2.5 bg-[#E8650A] text-white
+                         rounded-full text-[13px] font-semibold self-start
+                         group-hover:bg-[#d05a08] transition-colors duration-200">
+              Detail Products
+            </span>
+          </div>
+        </a>
+
+        <!-- Card 3: Baja Ringan & Genteng Metal (dark bg) -->
+        <a href="#"
+           class="group relative rounded-2xl overflow-hidden block bg-[#1a1a1a]"
+           style="min-height: 300px;">
+          <img src="https://images.pexels.com/photos/209315/pexels-photo-209315.jpeg?auto=compress&cs=tinysrgb&w=900&h=500&dpr=1"
+               alt="Baja Ringan dan Genteng Metal" loading="lazy"
+               class="absolute inset-0 w-full h-full object-cover opacity-35 group-hover:opacity-45 group-hover:scale-105 transition-all duration-700">
+          <div class="relative z-10 p-6 sm:p-7 flex flex-col justify-end h-full" style="min-height:300px;">
+            <span class="inline-block bg-white/10 text-white/80 text-[11px] font-bold tracking-[0.15em] uppercase
+                         px-3 py-1 rounded-full mb-3 self-start">Lightweight Steel</span>
+            <h3 class="text-white font-bold text-[20px] sm:text-[24px] tracking-[-0.01em] font-heading mb-1">
+              Lightweight Steel &amp; Metal Tiles
+            </h3>
+            <p class="text-white/65 text-[13px] leading-[1.6] max-w-[360px]">
+              Galvanised lightweight framing systems and stone-coated metal roof tiles — fast to install, long-lasting.
+            </p>
+            <span class="inline-flex items-center gap-1.5 mt-4 text-[#E8650A] text-[13px] font-semibold
+                         group-hover:gap-3 transition-all duration-200">
+              Detail Products
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2 7h10M8 4l3 3-3 3" stroke="#E8650A" stroke-width="1.5"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- Card 4: Siku Lubang (warm neutral bg, centered) -->
+        <a href="#"
+           class="group relative rounded-2xl overflow-hidden block"
+           style="min-height: 300px; background: #2c2c2c;">
+          <img src="https://images.pexels.com/photos/162553/keys-workshop-mechanic-tools-162553.jpeg?auto=compress&cs=tinysrgb&w=900&h=500&dpr=1"
+               alt="Siku Lubang" loading="lazy"
+               class="absolute inset-0 w-full h-full object-cover opacity-25 group-hover:opacity-35 group-hover:scale-105 transition-all duration-700">
+          <div class="absolute inset-0 bg-gradient-to-br from-[#E8650A]/30 to-transparent"></div>
+          <div class="relative z-10 p-6 sm:p-7 flex flex-col justify-end h-full" style="min-height:300px;">
+            <span class="inline-block bg-[#E8650A]/20 text-[#E8650A] text-[11px] font-bold tracking-[0.15em] uppercase
+                         border border-[#E8650A]/30 px-3 py-1 rounded-full mb-3 self-start">Steel Profile</span>
+            <h3 class="text-white font-bold text-[20px] sm:text-[24px] tracking-[-0.01em] font-heading mb-1">
+              Perforated Angle Steel
+            </h3>
+            <p class="text-white/65 text-[13px] leading-[1.6] max-w-[360px]">
+              Slotted angle bars and perforated steel sections for shelving, racking systems, and light structures.
+            </p>
+            <span class="inline-flex items-center gap-1.5 mt-4 text-[#E8650A] text-[13px] font-semibold
+                         group-hover:gap-3 transition-all duration-200">
+              Detail Products
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2 7h10M8 4l3 3-3 3" stroke="#E8650A" stroke-width="1.5"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
        SCRIPT
   ============================================================ -->
   <script>
