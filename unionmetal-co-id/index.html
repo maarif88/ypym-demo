@@ -1165,74 +1165,15 @@
   ============================================================ -->
   <footer class="relative overflow-hidden bg-[#f0f0ee]" style="min-height: 540px;">
 
-    <!-- Indonesia map SVG background -->
-    <div class="absolute inset-0 z-0 flex items-center justify-end pointer-events-none select-none"
+    <!-- Indonesia dot-matrix map background (external SVG) -->
+    <div class="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden"
          aria-hidden="true">
-      <!-- Simplified Indonesia archipelago outline rendered as inline SVG paths -->
-      <svg viewBox="0 0 1000 420" xmlns="http://www.w3.org/2000/svg"
-           class="w-full h-full object-cover opacity-100"
-           preserveAspectRatio="xMidYMid slice">
-        <!-- Ocean base -->
-        <rect width="1000" height="420" fill="#e8e8e4"/>
-        <!-- Subtle grid lines -->
-        <g stroke="#d4d4d0" stroke-width="0.5" opacity="0.6">
-          <line x1="0" y1="70" x2="1000" y2="70"/>
-          <line x1="0" y1="140" x2="1000" y2="140"/>
-          <line x1="0" y1="210" x2="1000" y2="210"/>
-          <line x1="0" y1="280" x2="1000" y2="280"/>
-          <line x1="0" y1="350" x2="1000" y2="350"/>
-          <line x1="100" y1="0" x2="100" y2="420"/>
-          <line x1="200" y1="0" x2="200" y2="420"/>
-          <line x1="300" y1="0" x2="300" y2="420"/>
-          <line x1="400" y1="0" x2="400" y2="420"/>
-          <line x1="500" y1="0" x2="500" y2="420"/>
-          <line x1="600" y1="0" x2="600" y2="420"/>
-          <line x1="700" y1="0" x2="700" y2="420"/>
-          <line x1="800" y1="0" x2="800" y2="420"/>
-          <line x1="900" y1="0" x2="900" y2="420"/>
-        </g>
-        <!-- Sumatra -->
-        <path d="M 80 140 C 90 130 110 125 130 118 C 155 112 170 108 195 105 C 215 103 230 105 248 110 C 262 115 268 122 272 132 C 275 140 270 150 260 158 C 248 166 232 172 212 175 C 195 177 178 176 162 178 C 145 180 132 185 118 190 C 104 196 92 202 84 210 C 78 217 76 225 80 233 C 84 240 92 245 104 248 C 115 251 126 250 135 245 C 142 240 145 232 140 225 C 134 218 122 215 112 212 C 102 209 92 208 86 210" fill="#c8c8c2" stroke="#b8b8b0" stroke-width="0.8"/>
-        <!-- Java -->
-        <path d="M 290 210 C 305 205 325 200 350 198 C 375 196 400 197 425 200 C 448 203 465 208 478 215 C 488 221 492 228 488 235 C 482 242 468 246 450 248 C 430 250 408 249 385 246 C 362 243 340 238 320 232 C 302 226 290 220 290 210 Z" fill="#c8c8c2" stroke="#b8b8b0" stroke-width="0.8"/>
-        <!-- Kalimantan -->
-        <path d="M 500 120 C 520 110 545 104 572 102 C 598 100 620 103 638 112 C 654 120 662 132 664 148 C 665 162 660 176 650 188 C 638 200 622 210 602 218 C 582 226 560 230 538 228 C 518 226 500 218 488 206 C 478 196 474 184 477 170 C 480 156 490 142 500 130 C 508 122 510 118 508 120" fill="#c8c8c2" stroke="#b8b8b0" stroke-width="0.8"/>
-        <!-- Sulawesi (simplified K shape) -->
-        <path d="M 690 130 C 700 122 712 118 720 120 C 728 122 730 130 726 140 C 722 150 712 158 706 168 C 700 178 698 188 700 196 C 702 204 708 210 716 212 C 724 214 730 210 732 202 C 734 194 728 186 722 180" fill="#c8c8c2" stroke="#b8b8b0" stroke-width="0.8"/>
-        <path d="M 720 150 C 732 144 745 142 754 146 C 762 150 764 160 758 168 C 752 176 740 180 730 178" fill="#c8c8c2" stroke="#b8b8b0" stroke-width="0.8"/>
-        <!-- Papua (west portion) -->
-        <path d="M 820 150 C 840 140 865 135 888 136 C 910 138 928 145 940 157 C 950 168 952 182 946 195 C 940 207 926 216 908 222 C 890 228 870 230 850 226 C 832 222 816 212 808 198 C 801 186 802 172 810 162 C 814 157 818 152 820 150 Z" fill="#c8c8c2" stroke="#b8b8b0" stroke-width="0.8"/>
-        <!-- Bali, Lombok (dots) -->
-        <ellipse cx="498" cy="228" rx="8" ry="5" fill="#c8c8c2" stroke="#b8b8b0" stroke-width="0.7"/>
-        <ellipse cx="514" cy="230" rx="6" ry="4" fill="#c8c8c2" stroke="#b8b8b0" stroke-width="0.7"/>
-        <ellipse cx="528" cy="231" rx="5" ry="3.5" fill="#c8c8c2" stroke="#b8b8b0" stroke-width="0.7"/>
-        <!-- Maluku scattered islands -->
-        <ellipse cx="762" cy="185" rx="9" ry="5" fill="#c8c8c2" stroke="#b8b8b0" stroke-width="0.7"/>
-        <ellipse cx="778" cy="175" rx="6" ry="4" fill="#c8c8c2" stroke="#b8b8b0" stroke-width="0.7"/>
-        <ellipse cx="790" cy="195" rx="7" ry="4" fill="#c8c8c2" stroke="#b8b8b0" stroke-width="0.7"/>
-        <ellipse cx="800" cy="165" rx="5" ry="3" fill="#c8c8c2" stroke="#b8b8b0" stroke-width="0.7"/>
-        <!-- Pin markers for key cities -->
-        <g fill="#E8650A">
-          <!-- Jakarta -->
-          <circle cx="322" cy="215" r="5"/>
-          <circle cx="322" cy="215" r="10" fill="none" stroke="#E8650A" stroke-width="1" opacity="0.4"/>
-          <!-- Surabaya -->
-          <circle cx="420" cy="214" r="3.5"/>
-          <!-- Medan -->
-          <circle cx="148" cy="140" r="3.5"/>
-          <!-- Makassar -->
-          <circle cx="700" cy="210" r="3.5"/>
-        </g>
-        <!-- City labels -->
-        <g font-family="system-ui,sans-serif" font-size="9" fill="#888880" font-weight="500">
-          <text x="326" y="212">Jakarta</text>
-          <text x="424" y="211">Surabaya</text>
-          <text x="152" y="138">Medan</text>
-        </g>
-        <!-- Dotted route line Jakarta to Surabaya -->
-        <line x1="327" y1="215" x2="416" y2="214" stroke="#E8650A" stroke-width="1.2"
-              stroke-dasharray="4 3" opacity="0.55"/>
-      </svg>
+      <!-- Base bg matching footer color -->
+      <div class="absolute inset-0 bg-[#f0f0ee]"></div>
+      <!-- Map image: right-aligned, covers right 65% of footer -->
+      <img src="./map.svg" alt=""
+           class="absolute top-0 right-0 h-full w-auto"
+           style="max-height: 100%; min-width: 55%;">
     </div>
 
     <!-- Left white gradient fade — content side -->
