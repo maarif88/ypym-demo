@@ -71,23 +71,10 @@
     /* ── Navbar shadow ─────────────────────────────────────── */
     #main-header {
       box-shadow: 0 2px 28px rgba(0,0,0,0.22), 0 1px 6px rgba(0,0,0,0.12);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
-    /* ── Navbar layer 2 (USP strip) scroll hide ──────────── */
-    #usp-strip {
-      transition: max-height 0.38s cubic-bezier(0.4, 0, 0.2, 1),
-                  opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-      max-height: 50px;
-      overflow: hidden;
-    }
-    #usp-strip.strip-collapsing {
-      max-height: 0;
-      opacity: 0;
-      pointer-events: none;
-    }
-    /* Hide mobile CTA when strip is hidden */
-    #main-header.strip-hidden-state ~ #mobile-menu #mobile-cta-block {
-      display: none;
+    #main-header.nav-hidden {
+      transform: translateY(-100%);
     }
     /* White-bg CTA button: default white bg/black text, hover orange bg/black text */
     .btn-cta-white {
@@ -1132,46 +1119,23 @@
     syncMenuTop();
     window.addEventListener('resize', syncMenuTop);
 
-    /* ── Navbar layer 2 (USP strip) scroll hide/show ──────────── */
+    /* ── Full navbar hide/show on scroll ──────────────────────── */
     (function () {
-      const header   = document.getElementById('main-header');
-      const uspStrip = document.getElementById('usp-strip');
-      const threshold = () => window.innerHeight * 0.30;
+      const header    = document.getElementById('main-header');
+      const threshold = 80; // px from top before hide kicks in
       let lastY  = window.scrollY;
       let hidden = false;
-      let hideTimer = null;
-
-      function hideStrip() {
-        if (hideTimer) clearTimeout(hideTimer);
-        uspStrip.classList.add('strip-collapsing');
-        header.classList.add('strip-hidden-state');
-        // After transition ends (~400ms), fully remove from render
-        hideTimer = setTimeout(function() {
-          uspStrip.style.display = 'none';
-        }, 420);
-        hidden = true;
-        syncMenuTop();
-      }
-
-      function showStrip() {
-        if (hideTimer) clearTimeout(hideTimer);
-        uspStrip.style.display = '';
-        // Force reflow so transition plays
-        uspStrip.offsetHeight;
-        uspStrip.classList.remove('strip-collapsing');
-        header.classList.remove('strip-hidden-state');
-        hidden = false;
-        syncMenuTop();
-      }
 
       function onScroll() {
         const y    = window.scrollY;
         const down = y > lastY;
 
-        if (down && !hidden && y > threshold()) {
-          hideStrip();
+        if (down && !hidden && y > threshold) {
+          header.classList.add('nav-hidden');
+          hidden = true;
         } else if (!down && hidden) {
-          showStrip();
+          header.classList.remove('nav-hidden');
+          hidden = false;
         }
         lastY = y;
       }
