@@ -1704,9 +1704,10 @@
         tap: false,
       });
 
-      // Stadia Alidade Smooth Dark — dark slate-blue, land/labels clearly visible
-      L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
-        maxZoom: 20,
+      // ESRI World Dark Gray Base — free, no API key, clear land/sea contrast
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 16,
+        attribution: '',
       }).addTo(map);
 
       var cities = [
