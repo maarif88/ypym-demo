@@ -1272,6 +1272,252 @@
   </script>
 
   <!-- ============================================================
+       PROJECT SHOWCASE SLIDER
+  ============================================================ -->
+  <style>
+    .sc-card {
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      will-change: transform, opacity;
+      transition: transform 0.65s cubic-bezier(0.4,0,0.2,1),
+                  opacity  0.65s cubic-bezier(0.4,0,0.2,1);
+    }
+    .sc-card[data-slot="0"] { transform: scale(1);     z-index: 30; opacity: 1;    }
+    .sc-card[data-slot="1"] { transform: scale(0.955); z-index: 20; opacity: 0.65; }
+    .sc-card[data-slot="2"] { transform: scale(0.91);  z-index: 10; opacity: 0.30; }
+    .sc-card[data-slot="3"] { transform: scale(0.865); z-index:  0; opacity: 0; pointer-events: none; }
+    .sc-card.sc-exit {
+      transform: translateY(112%) !important;
+      opacity: 0 !important;
+      z-index: 40 !important;
+      transition: transform 0.55s cubic-bezier(0.4,0,0.85,0.9) !important,
+                  opacity  0.28s ease 0.22s !important;
+    }
+    @keyframes sc-bar {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+  </style>
+
+  <section class="bg-[#0f0f0f] pt-20 sm:pt-24 pb-20 sm:pb-24">
+    <div class="max-w-screen-xl mx-auto px-5 sm:px-8 xl:px-12">
+
+      <!-- Header row -->
+      <div class="flex items-end justify-between mb-10 sm:mb-12">
+        <div>
+          <span class="inline-block text-[#E8650A] text-[11.5px] font-bold tracking-[0.18em] uppercase mb-3">
+            Project Showcase
+          </span>
+          <h2 class="font-heading text-white text-[28px] sm:text-[38px] lg:text-[44px]
+                     font-normal leading-[1.12] tracking-[-0.02em]">
+            Ribuan Proyek Konstruksi<br class="hidden sm:block">di Seluruh Indonesia
+          </h2>
+        </div>
+        <a href="#"
+           class="hidden sm:inline-flex items-center gap-1.5 text-white/35 hover:text-white
+                  text-[13px] font-medium transition-colors duration-200 shrink-0 mb-1.5">
+          Lihat Semua Proyek
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2 7h10M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Card deck -->
+      <div id="sc-outer"
+           style="position: relative; height: clamp(320px, 42vw, 540px);
+                  border-radius: 18px; overflow: hidden;">
+        <div id="sc-deck" style="position: absolute; inset: 0;">
+
+          <!-- Card 0: Roofing & Cladding -->
+          <div class="sc-card" data-slot="0">
+            <div class="absolute inset-0 bg-cover bg-center"
+                 style="background-image:url('https://images.pexels.com/photos/1267338/pexels-photo-1267338.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=1');"></div>
+            <div class="absolute inset-0"
+                 style="background:linear-gradient(to top,rgba(0,0,0,0.84) 0%,rgba(0,0,0,0.28) 42%,transparent 72%);"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-7 sm:p-10 flex items-end justify-between gap-4">
+              <div>
+                <span class="inline-block bg-[#E8650A]/18 text-[#E8650A] text-[10.5px] font-bold
+                             tracking-[0.14em] uppercase border border-[#E8650A]/30 px-2.5 py-1
+                             rounded-full mb-3">Roofing &amp; Cladding</span>
+                <h3 class="text-white font-bold text-[20px] sm:text-[26px] leading-[1.2]
+                           tracking-[-0.01em] mb-1.5 font-heading">
+                  Atap &amp; Fasad Pabrik<br>Karawang Industrial Estate
+                </h3>
+                <p class="text-white/45 text-[13px]">Bekasi, Jawa Barat &nbsp;·&nbsp; 2024</p>
+              </div>
+              <div class="shrink-0 text-right hidden sm:block">
+                <div class="text-white/18 text-[11px] font-medium uppercase tracking-[0.12em] mb-0.5">Project</div>
+                <div class="text-white/45 font-light" style="font-size:clamp(24px,3vw,40px); line-height:1;">01</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 1: Steel Construction -->
+          <div class="sc-card" data-slot="1">
+            <div class="absolute inset-0 bg-cover bg-center"
+                 style="background-image:url('https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=1');"></div>
+            <div class="absolute inset-0"
+                 style="background:linear-gradient(to top,rgba(0,0,0,0.84) 0%,rgba(0,0,0,0.28) 42%,transparent 72%);"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-7 sm:p-10 flex items-end justify-between gap-4">
+              <div>
+                <span class="inline-block bg-[#E8650A]/18 text-[#E8650A] text-[10.5px] font-bold
+                             tracking-[0.14em] uppercase border border-[#E8650A]/30 px-2.5 py-1
+                             rounded-full mb-3">Steel Construction</span>
+                <h3 class="text-white font-bold text-[20px] sm:text-[26px] leading-[1.2]
+                           tracking-[-0.01em] mb-1.5 font-heading">
+                  Struktur Baja Gudang<br>Distribusi Surabaya
+                </h3>
+                <p class="text-white/45 text-[13px]">Surabaya, Jawa Timur &nbsp;·&nbsp; 2023</p>
+              </div>
+              <div class="shrink-0 text-right hidden sm:block">
+                <div class="text-white/18 text-[11px] font-medium uppercase tracking-[0.12em] mb-0.5">Project</div>
+                <div class="text-white/45 font-light" style="font-size:clamp(24px,3vw,40px); line-height:1;">02</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Lightweight Steel -->
+          <div class="sc-card" data-slot="2">
+            <div class="absolute inset-0 bg-cover bg-center"
+                 style="background-image:url('https://images.pexels.com/photos/442150/pexels-photo-442150.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=1');"></div>
+            <div class="absolute inset-0"
+                 style="background:linear-gradient(to top,rgba(0,0,0,0.84) 0%,rgba(0,0,0,0.28) 42%,transparent 72%);"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-7 sm:p-10 flex items-end justify-between gap-4">
+              <div>
+                <span class="inline-block bg-[#E8650A]/18 text-[#E8650A] text-[10.5px] font-bold
+                             tracking-[0.14em] uppercase border border-[#E8650A]/30 px-2.5 py-1
+                             rounded-full mb-3">Lightweight Steel</span>
+                <h3 class="text-white font-bold text-[20px] sm:text-[26px] leading-[1.2]
+                           tracking-[-0.01em] mb-1.5 font-heading">
+                  Bangunan Komersial<br>Kuningan, Jakarta Selatan
+                </h3>
+                <p class="text-white/45 text-[13px]">Jakarta Selatan, DKI &nbsp;·&nbsp; 2024</p>
+              </div>
+              <div class="shrink-0 text-right hidden sm:block">
+                <div class="text-white/18 text-[11px] font-medium uppercase tracking-[0.12em] mb-0.5">Project</div>
+                <div class="text-white/45 font-light" style="font-size:clamp(24px,3vw,40px); line-height:1;">03</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Steel Profile -->
+          <div class="sc-card" data-slot="3">
+            <div class="absolute inset-0 bg-cover bg-center"
+                 style="background-image:url('https://images.pexels.com/photos/1117452/pexels-photo-1117452.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=1');"></div>
+            <div class="absolute inset-0"
+                 style="background:linear-gradient(to top,rgba(0,0,0,0.84) 0%,rgba(0,0,0,0.28) 42%,transparent 72%);"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-7 sm:p-10 flex items-end justify-between gap-4">
+              <div>
+                <span class="inline-block bg-[#E8650A]/18 text-[#E8650A] text-[10.5px] font-bold
+                             tracking-[0.14em] uppercase border border-[#E8650A]/30 px-2.5 py-1
+                             rounded-full mb-3">Steel Profile</span>
+                <h3 class="text-white font-bold text-[20px] sm:text-[26px] leading-[1.2]
+                           tracking-[-0.01em] mb-1.5 font-heading">
+                  Fasilitas Industri<br>Medan Industrial Park
+                </h3>
+                <p class="text-white/45 text-[13px]">Medan, Sumatera Utara &nbsp;·&nbsp; 2023</p>
+              </div>
+              <div class="shrink-0 text-right hidden sm:block">
+                <div class="text-white/18 text-[11px] font-medium uppercase tracking-[0.12em] mb-0.5">Project</div>
+                <div class="text-white/45 font-light" style="font-size:clamp(24px,3vw,40px); line-height:1;">04</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Progress bars -->
+      <div id="sc-dots" class="flex items-center gap-2 mt-4">
+        <div class="sc-dot flex-1 h-[3px] rounded-full bg-white/15 overflow-hidden relative" data-i="0">
+          <div class="sc-fill absolute inset-0 rounded-full bg-[#E8650A]"
+               style="transform:scaleX(0);transform-origin:left center;"></div>
+        </div>
+        <div class="sc-dot flex-1 h-[3px] rounded-full bg-white/15 overflow-hidden relative" data-i="1">
+          <div class="sc-fill absolute inset-0 rounded-full bg-[#E8650A]"
+               style="transform:scaleX(0);transform-origin:left center;"></div>
+        </div>
+        <div class="sc-dot flex-1 h-[3px] rounded-full bg-white/15 overflow-hidden relative" data-i="2">
+          <div class="sc-fill absolute inset-0 rounded-full bg-[#E8650A]"
+               style="transform:scaleX(0);transform-origin:left center;"></div>
+        </div>
+        <div class="sc-dot flex-1 h-[3px] rounded-full bg-white/15 overflow-hidden relative" data-i="3">
+          <div class="sc-fill absolute inset-0 rounded-full bg-[#E8650A]"
+               style="transform:scaleX(0);transform-origin:left center;"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      'use strict';
+      const cards = Array.from(document.querySelectorAll('.sc-card'));
+      const fills = Array.from(document.querySelectorAll('.sc-fill'));
+      // order[slot] = card index occupying that slot
+      let order = [0, 1, 2, 3];
+      let animating = false;
+      let timer;
+
+      function activateDot() {
+        const activeIdx = order[0];
+        fills.forEach(function (f) {
+          f.style.animation = 'none';
+          void f.offsetWidth;
+          f.style.transform = 'scaleX(0)';
+        });
+        void fills[activeIdx].offsetWidth;
+        fills[activeIdx].style.transform = '';
+        fills[activeIdx].style.animation = 'sc-bar 4s linear forwards';
+      }
+
+      function advance() {
+        if (animating) return;
+        animating = true;
+        clearInterval(timer);
+
+        var exitCard = cards[order[0]];
+        exitCard.classList.add('sc-exit');
+
+        requestAnimationFrame(function () {
+          var prev = order[0];
+          order = [order[1], order[2], order[3], order[0]];
+          for (var s = 0; s < 4; s++) {
+            if (cards[order[s]] !== exitCard) {
+              cards[order[s]].dataset.slot = s;
+            }
+          }
+          setTimeout(function () {
+            exitCard.dataset.slot = '3';
+            exitCard.classList.remove('sc-exit');
+            animating = false;
+            activateDot();
+            timer = setInterval(advance, 4000);
+          }, 620);
+        });
+      }
+
+      // Init
+      cards.forEach(function (c, i) { c.dataset.slot = i; });
+      activateDot();
+      timer = setInterval(advance, 4000);
+
+      // Pause on hover
+      var outer = document.getElementById('sc-outer');
+      outer.addEventListener('mouseenter', function () { clearInterval(timer); });
+      outer.addEventListener('mouseleave', function () {
+        clearInterval(timer);
+        timer = setInterval(advance, 4000);
+      });
+    })();
+  </script>
+
+  <!-- ============================================================
        FOOTER — MAP FULL BLEED + INFO TOP-RIGHT
   ============================================================ -->
   <footer class="relative overflow-hidden bg-[#0d0d0d]" style="min-height: 560px;">
