@@ -70,24 +70,20 @@
       box-shadow: 0 2px 28px rgba(0,0,0,0.22), 0 1px 6px rgba(0,0,0,0.12);
     }
 
-    /* ── Navbar layer 1 scroll hide ────────────────────────── */
-    #nav-layer1 {
-      transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1),
-                  opacity 0.38s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    #nav-layer1.nav-hidden {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-    /* When layer 1 is hidden, shift USP strip up to top */
+    /* ── Navbar layer 2 (USP strip) scroll hide ──────────── */
     #usp-strip {
-      transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: max-height 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity    0.38s cubic-bezier(0.4, 0, 0.2, 1);
+      max-height: 50px;
+      overflow: hidden;
     }
-    #main-header.layer1-hidden #usp-strip {
-      transform: translateY(-60px);
+    #usp-strip.strip-hidden {
+      max-height: 0;
+      opacity: 0;
+      pointer-events: none;
     }
-    /* Hide mobile CTA when scrolled (layer1 hidden) */
-    #main-header.layer1-hidden ~ #mobile-menu #mobile-cta-block {
+    /* Hide mobile CTA when strip is hidden */
+    #main-header.strip-hidden-state ~ #mobile-menu #mobile-cta-block {
       display: none;
     }
     /* White-bg CTA button: default white bg/black text, hover orange bg/black text */
@@ -924,6 +920,62 @@
         label:   '500+ Expert Team',
         label_id:'500+ Tim Ahli',
       },
+      {
+        image:   'https://images.pexels.com/photos/3862132/pexels-photo-3862132.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=1',
+        thumb:   'https://images.pexels.com/photos/3862132/pexels-photo-3862132.jpeg?auto=compress&cs=tinysrgb&w=180&h=120&dpr=1',
+        title:   'Premium Metal Cladding for Modern Architecture',
+        title_id:'Cladding Metal Premium untuk Arsitektur Modern',
+        desc:    'Elevate building facades with our precision-formed metal cladding solutions. Available in a wide range of profiles, coatings, and colors for any architectural vision.',
+        desc_id: 'Tingkatkan fasad bangunan dengan solusi cladding metal presisi kami. Tersedia dalam berbagai profil, coating, dan warna untuk setiap visi arsitektur.',
+        cta:     'Explore Cladding',
+        cta_id:  'Lihat Cladding',
+        heading: 'Form Meets Function in Every Panel',
+        heading_id: 'Estetika dan Fungsi di Setiap Panel',
+        label:   'Custom Profiles & Finishes',
+        label_id:'Profil & Finishing Kustom',
+      },
+      {
+        image:   'https://images.pexels.com/photos/1078884/pexels-photo-1078884.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=1',
+        thumb:   'https://images.pexels.com/photos/1078884/pexels-photo-1078884.jpeg?auto=compress&cs=tinysrgb&w=180&h=120&dpr=1',
+        title:   'High-Speed Roll Forming for Consistent Quality',
+        title_id:'Roll Forming Kecepatan Tinggi untuk Kualitas Konsisten',
+        desc:    'Our automated roll-forming lines produce thousands of meters daily at micron-level precision — delivering consistent thickness, straightness, and surface finish every time.',
+        desc_id: 'Lini roll-forming otomatis kami memproduksi ribuan meter per hari dengan presisi tingkat mikron - menghadirkan ketebalan, kelurusan, dan permukaan yang konsisten.',
+        cta:     'See Manufacturing',
+        cta_id:  'Lihat Produksi',
+        heading: 'Where Precision Meets Scale',
+        heading_id: 'Di Mana Presisi Bertemu Skala',
+        label:   'Automated Production Lines',
+        label_id:'Lini Produksi Otomatis',
+      },
+      {
+        image:   'https://images.pexels.com/photos/573259/pexels-photo-573259.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=1',
+        thumb:   'https://images.pexels.com/photos/573259/pexels-photo-573259.jpeg?auto=compress&cs=tinysrgb&w=180&h=120&dpr=1',
+        title:   'National Infrastructure Powered by Union Metal',
+        title_id:'Infrastruktur Nasional Didukung Union Metal',
+        desc:    'From toll road bridges to government buildings and power plants, Union Metal has supplied structural steel to over 2,000 major infrastructure projects across Indonesia.',
+        desc_id: 'Dari jembatan tol hingga gedung pemerintah dan pembangkit listrik, Union Metal telah memasok baja struktural untuk lebih dari 2.000 proyek infrastruktur besar di Indonesia.',
+        cta:     'View Portfolio',
+        cta_id:  'Lihat Portofolio',
+        heading: "Indonesia's Infrastructure, Strengthened by Steel",
+        heading_id: 'Infrastruktur Indonesia, Diperkuat oleh Baja',
+        label:   '2,000+ Major Projects',
+        label_id:'2.000+ Proyek Besar',
+      },
+      {
+        image:   'https://images.pexels.com/photos/3913033/pexels-photo-3913033.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=1',
+        thumb:   'https://images.pexels.com/photos/3913033/pexels-photo-3913033.jpeg?auto=compress&cs=tinysrgb&w=180&h=120&dpr=1',
+        title:   'Rigorous Testing at Every Stage of Production',
+        title_id:'Pengujian Ketat di Setiap Tahap Produksi',
+        desc:    'Our on-site laboratory conducts tensile testing, corrosion resistance checks, and dimensional verification to guarantee every product meets international standards.',
+        desc_id: 'Laboratorium internal kami melakukan uji tarik, pemeriksaan ketahanan korosi, dan verifikasi dimensi untuk memastikan setiap produk memenuhi standar internasional.',
+        cta:     'Our Quality Promise',
+        cta_id:  'Komitmen Kualitas Kami',
+        heading: 'Quality is Not Optional - It Is Standard',
+        heading_id: 'Kualitas Bukan Pilihan, Ini Standar Kami',
+        label:   'SNI & ISO Compliant',
+        label_id:'Sesuai SNI & ISO',
+      },
     ];
 
     const DURATION = 8000; /* ms per slide */
@@ -1082,28 +1134,28 @@
     syncMenuTop();
     window.addEventListener('resize', syncMenuTop);
 
-    /* ── Navbar layer 1 scroll hide/show ─────────────────────── */
+    /* ── Navbar layer 2 (USP strip) scroll hide/show ──────────── */
     (function () {
-      const header    = document.getElementById('main-header');
-      const layer1    = document.getElementById('nav-layer1');
-      const threshold = () => window.innerHeight * 0.30;  // 30% of viewport
-      let lastY       = window.scrollY;
-      let hidden      = false;
+      const header   = document.getElementById('main-header');
+      const uspStrip = document.getElementById('usp-strip');
+      const threshold = () => window.innerHeight * 0.30;
+      let lastY  = window.scrollY;
+      let hidden = false;
 
       function onScroll() {
         const y    = window.scrollY;
         const down = y > lastY;
 
         if (down && !hidden && y > threshold()) {
-          // Scrolling down past 30% — hide layer 1
-          layer1.classList.add('nav-hidden');
-          header.classList.add('layer1-hidden');
+          // Scrolling down past 30% — hide USP strip (layer 2)
+          uspStrip.classList.add('strip-hidden');
+          header.classList.add('strip-hidden-state');
           hidden = true;
           syncMenuTop();
         } else if (!down && hidden) {
-          // Scrolling up — reveal layer 1
-          layer1.classList.remove('nav-hidden');
-          header.classList.remove('layer1-hidden');
+          // Scrolling up — reveal USP strip
+          uspStrip.classList.remove('strip-hidden');
+          header.classList.remove('strip-hidden-state');
           hidden = false;
           syncMenuTop();
         }
