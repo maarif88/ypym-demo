@@ -173,7 +173,23 @@
 
         <!-- Right CTA + hamburger -->
         <div class="flex items-center gap-3">
+
+          <!-- Language switcher -->
+          <div class="hidden md:flex items-center rounded-full border border-[#d0d0d0] overflow-hidden select-none shrink-0">
+            <button id="lang-id-btn"
+                    onclick="setLang('id')"
+                    class="px-3 py-[5px] text-[11.5px] font-bold transition-all duration-200 bg-[#161616] text-white">
+              ID
+            </button>
+            <button id="lang-en-btn"
+                    onclick="setLang('en')"
+                    class="px-3 py-[5px] text-[11.5px] font-bold transition-all duration-200 text-[#525252] hover:text-[#161616]">
+              EN
+            </button>
+          </div>
+
           <a href="#"
+             data-en="Contact Us" data-id="Hubungi Kami"
              class="hidden md:inline-flex items-center px-[18px] h-9 rounded-full
                     bg-[#E8650A] text-white text-[13px] font-semibold
                     hover:bg-[#d05a08]
@@ -205,13 +221,31 @@
        class="mobile-menu fixed top-[60px] sm:top-[64px] left-0 right-0 z-40
               bg-white border-b border-[#e0e0e0]">
     <div class="px-4 sm:px-6 py-5 flex flex-col gap-1">
-      <a href="#" class="block px-4 py-3 text-[#525252] hover:text-[#E8650A] hover:bg-orange-50 rounded-xl text-[16px] font-medium transition-all duration-200">Products</a>
-      <a href="#" class="block px-4 py-3 text-[#525252] hover:text-[#E8650A] hover:bg-orange-50 rounded-xl text-[16px] font-medium transition-all duration-200">Solutions</a>
-      <a href="#" class="block px-4 py-3 text-[#525252] hover:text-[#E8650A] hover:bg-orange-50 rounded-xl text-[16px] font-medium transition-all duration-200">Projects</a>
-      <a href="#" class="block px-4 py-3 text-[#525252] hover:text-[#E8650A] hover:bg-orange-50 rounded-xl text-[16px] font-medium transition-all duration-200">About</a>
-      <a href="#" class="block px-4 py-3 text-[#525252] hover:text-[#E8650A] hover:bg-orange-50 rounded-xl text-[16px] font-medium transition-all duration-200">Contact</a>
+
+      <!-- Mobile lang toggle -->
+      <div class="flex items-center gap-2 px-4 py-2 mb-1">
+        <span class="text-[#525252] text-[12px] font-medium">Language:</span>
+        <div class="flex items-center rounded-full border border-[#d0d0d0] overflow-hidden select-none">
+          <button id="lang-id-mob"
+                  onclick="setLang('id')"
+                  class="px-3 py-1 text-[11.5px] font-bold transition-all duration-200 bg-[#161616] text-white">
+            ID
+          </button>
+          <button id="lang-en-mob"
+                  onclick="setLang('en')"
+                  class="px-3 py-1 text-[11.5px] font-bold transition-all duration-200 text-[#525252] hover:text-[#161616]">
+            EN
+          </button>
+        </div>
+      </div>
+
+      <a href="#" data-en="Products" data-id="Produk" class="block px-4 py-3 text-[#525252] hover:text-[#E8650A] hover:bg-orange-50 rounded-xl text-[16px] font-medium transition-all duration-200">Products</a>
+      <a href="#" data-en="Solutions" data-id="Solusi" class="block px-4 py-3 text-[#525252] hover:text-[#E8650A] hover:bg-orange-50 rounded-xl text-[16px] font-medium transition-all duration-200">Solutions</a>
+      <a href="#" data-en="Projects" data-id="Proyek" class="block px-4 py-3 text-[#525252] hover:text-[#E8650A] hover:bg-orange-50 rounded-xl text-[16px] font-medium transition-all duration-200">Projects</a>
+      <a href="#" data-en="About" data-id="Tentang" class="block px-4 py-3 text-[#525252] hover:text-[#E8650A] hover:bg-orange-50 rounded-xl text-[16px] font-medium transition-all duration-200">About</a>
+      <a href="#" data-en="Contact" data-id="Kontak" class="block px-4 py-3 text-[#525252] hover:text-[#E8650A] hover:bg-orange-50 rounded-xl text-[16px] font-medium transition-all duration-200">Contact</a>
       <div class="pt-4 mt-2 border-t border-[#e0e0e0]">
-        <a href="#"
+        <a href="#" data-en="Contact Us" data-id="Hubungi Kami"
            class="block w-full text-center py-3 rounded-xl bg-[#E8650A] text-white font-semibold text-[15px]
                   hover:bg-[#d05a08] transition-colors duration-200 active:scale-[0.98]">
           Contact Us
@@ -246,12 +280,13 @@
                     gap-5 lg:gap-10 pb-5 lg:pb-10">
 
           <!-- Glass card (left) -->
-          <div class="glass rounded-[20px] p-5 sm:p-6
-                      w-full sm:max-w-[300px] lg:max-w-[280px] xl:max-w-[305px] shrink-0
-                      transition-transform duration-500 hover:-translate-y-1">
+          <div class="glass rounded-[22px] p-5 sm:p-6 flex flex-col
+                      w-full sm:max-w-[380px] lg:w-[30vw] shrink-0
+                      transition-transform duration-500 hover:-translate-y-1"
+               style="height: clamp(280px, 40vh, 520px);">
 
             <!-- Card icon badge -->
-            <div class="w-[34px] h-[34px] rounded-full glass flex items-center justify-center mb-[18px]">
+            <div class="w-[34px] h-[34px] rounded-full glass flex items-center justify-center shrink-0">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                 <circle cx="7" cy="7" r="2.8" fill="white" fill-opacity="0.9"/>
                 <circle cx="7" cy="7" r="6.1" stroke="white" stroke-opacity="0.4" stroke-width="1"/>
@@ -259,18 +294,21 @@
             </div>
 
             <!-- Animated card body -->
-            <div id="card-body" class="card-body">
-              <h2 id="card-title"
-                  class="text-white font-bold leading-[1.28] tracking-[-0.015em] mb-3
-                         text-[17px] sm:text-[19px]"></h2>
-              <p id="card-desc"
-                 class="text-white/52 leading-[1.65] mb-5
-                        text-[12.5px] sm:text-[13px]"></p>
+            <div id="card-body" class="card-body flex-1 flex flex-col justify-between mt-4">
+              <div>
+                <h2 id="card-title"
+                    class="text-white font-bold leading-[1.25] tracking-[-0.015em] mb-3"
+                    style="font-size: clamp(15px, 1.35vw, 22px);"></h2>
+                <p id="card-desc"
+                   class="text-white/65 leading-[1.7]"
+                   style="font-size: clamp(11.5px, 0.9vw, 14px);"></p>
+              </div>
               <button id="card-cta"
-                      class="inline-flex items-center gap-2 px-4 h-9 rounded-full glass
-                             text-white text-[12.5px] font-medium
-                             hover:bg-white/20 transition-all duration-200 active:scale-95">
-                <span id="card-cta-text">Explore More</span>
+                      class="inline-flex items-center gap-2 self-start px-4 h-9 rounded-full glass
+                             text-white font-medium shrink-0
+                             hover:bg-white/20 transition-all duration-200 active:scale-95"
+                      style="font-size: clamp(11.5px, 0.85vw, 13.5px);">
+                <span id="card-cta-text">Explore Products</span>
                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
                   <path d="M2 6.5h9M8 3.5 11 6.5 8 9.5" stroke="white" stroke-width="1.4"
                         stroke-linecap="round" stroke-linejoin="round"/>
@@ -559,37 +597,57 @@
         image:   'https://images.pexels.com/photos/1267338/pexels-photo-1267338.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=1',
         thumb:   'https://images.pexels.com/photos/1267338/pexels-photo-1267338.jpeg?auto=compress&cs=tinysrgb&w=180&h=120&dpr=1',
         title:   'Precision Steel Products Built for the Modern Era',
+        title_id:'Produk Baja Presisi untuk Era Modern',
         desc:    'Over 50 years of manufacturing excellence. ISO-certified processes, rigorous quality control, and structural integrity that lasts decades.',
+        desc_id: 'Lebih dari 50 tahun keunggulan manufaktur. Proses bersertifikasi ISO, kontrol kualitas ketat, dan integritas struktural yang bertahan puluhan tahun.',
         cta:     'Explore Products',
+        cta_id:  'Lihat Produk',
         heading: ['Strength Built', 'Into Every', 'Steel Profile'],
+        heading_id: ['Kekuatan Terbangun', 'di Setiap', 'Profil Baja'],
         label:   'ISO-Certified Manufacturing',
+        label_id:'Manufaktur Bersertifikasi ISO',
       },
       {
         image:   'https://images.pexels.com/photos/2760244/pexels-photo-2760244.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=1',
         thumb:   'https://images.pexels.com/photos/2760244/pexels-photo-2760244.jpeg?auto=compress&cs=tinysrgb&w=180&h=120&dpr=1',
         title:   'Advanced Metal Roofing for Every Scale of Project',
+        title_id:'Atap Metal Canggih untuk Setiap Skala Proyek',
         desc:    'From residential homes to large industrial complexes, our roofing systems deliver superior weatherproofing, thermal efficiency, and long-term durability.',
+        desc_id: 'Dari rumah tinggal hingga kawasan industri besar, sistem atap kami memberikan perlindungan cuaca superior, efisiensi termal, dan daya tahan jangka panjang.',
         cta:     'View Roofing Solutions',
+        cta_id:  'Lihat Solusi Atap',
         heading: ['Roofing That', 'Stands the Test', 'of Time'],
+        heading_id: ['Atap yang', 'Teruji Melewati', 'Waktu'],
         label:   'Nationwide Distribution',
+        label_id:'Distribusi Seluruh Indonesia',
       },
       {
         image:   'https://images.pexels.com/photos/236705/pexels-photo-236705.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=1',
         thumb:   'https://images.pexels.com/photos/236705/pexels-photo-236705.jpeg?auto=compress&cs=tinysrgb&w=180&h=120&dpr=1',
         title:   'Structural Steel for Indonesia\'s Largest Projects',
+        title_id:'Baja Struktural untuk Proyek Terbesar Indonesia',
         desc:    'Trusted by leading contractors and developers across Indonesia. Our structural steel delivers load-bearing performance and dimensional precision your projects demand.',
+        desc_id: 'Dipercaya oleh kontraktor dan developer terkemuka di seluruh Indonesia. Baja struktural kami menghadirkan performa beban dan presisi dimensional yang dibutuhkan proyek Anda.',
         cta:     'See Our Projects',
+        cta_id:  'Lihat Proyek Kami',
         heading: ['Building the', 'Infrastructure', 'of Tomorrow'],
+        heading_id: ['Membangun', 'Infrastruktur', 'Masa Depan'],
         label:   'Trusted Since 1972',
+        label_id:'Dipercaya Sejak 1972',
       },
       {
         image:   'https://images.pexels.com/photos/1108101/pexels-photo-1108101.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=1',
         thumb:   'https://images.pexels.com/photos/1108101/pexels-photo-1108101.jpeg?auto=compress&cs=tinysrgb&w=180&h=120&dpr=1',
         title:   'State-of-the-Art Production Facility in Indonesia',
+        title_id:'Fasilitas Produksi Mutakhir di Indonesia',
         desc:    'Our modern factory operates with precision-engineered roll-forming machines, continuous quality monitoring, and a team of 500+ skilled professionals.',
+        desc_id: 'Pabrik modern kami beroperasi dengan mesin roll-forming berteknologi tinggi, pemantauan kualitas berkelanjutan, dan tim 500+ profesional terlatih.',
         cta:     'Learn About Us',
+        cta_id:  'Tentang Kami',
         heading: ['Made in', 'Indonesia, Built', 'for the World'],
+        heading_id: ['Buatan', 'Indonesia, untuk', 'Dunia'],
         label:   '500+ Expert Team',
+        label_id:'500+ Tim Ahli',
       },
     ];
 
@@ -599,6 +657,7 @@
     let current       = 0;
     let autoTimer     = null;
     let transitioning = false;
+    let lang          = 'id'; /* default: Bahasa Indonesia */
 
     /* ── DOM refs ────────────────────────────────────────────── */
     const slidesWrap   = document.getElementById('slides-wrap');
@@ -651,14 +710,54 @@
 
     /* ── Set text content ────────────────────────────────────── */
     function setContent(idx) {
-      const s = SLIDES[idx];
-      cardTitle.textContent   = s.title;
-      cardDesc.textContent    = s.desc;
-      cardCtaText.textContent = s.cta;
-      slideLabel.textContent  = s.label;
-      const html = s.heading.map(l => `<span class="block">${l}</span>`).join('');
+      const s  = SLIDES[idx];
+      const id = lang === 'id';
+      cardTitle.textContent   = id ? (s.title_id   || s.title)   : s.title;
+      cardDesc.textContent    = id ? (s.desc_id    || s.desc)    : s.desc;
+      cardCtaText.textContent = id ? (s.cta_id     || s.cta)     : s.cta;
+      slideLabel.textContent  = id ? (s.label_id   || s.label)   : s.label;
+      const hl = id ? (s.heading_id || s.heading) : s.heading;
+      const html = hl.map(l => `<span class="block">${l}</span>`).join('');
       heroHl.innerHTML    = html;
       heroHlMob.innerHTML = html;
+    }
+
+    /* ── Language toggle ─────────────────────────────────────── */
+    function setLang(l) {
+      lang = l;
+      const isId = l === 'id';
+
+      /* Update all lang buttons */
+      ['lang-id-btn','lang-id-mob'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.classList.toggle('bg-[#161616]', isId);
+        el.classList.toggle('text-white',   isId);
+        el.classList.toggle('text-[#525252]', !isId);
+      });
+      ['lang-en-btn','lang-en-mob'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.classList.toggle('bg-[#161616]', !isId);
+        el.classList.toggle('text-white',   !isId);
+        el.classList.toggle('text-[#525252]', isId);
+      });
+
+      /* Swap data-en/data-id elements */
+      document.querySelectorAll('[data-en]').forEach(el => {
+        el.textContent = isId ? (el.dataset.id || el.dataset.en) : el.dataset.en;
+      });
+
+      /* Update desktop nav links */
+      const navLabels = isId
+        ? ['Produk','Solusi','Proyek','Tentang','Kontak']
+        : ['Products','Solutions','Projects','About','Contact'];
+      document.querySelectorAll('nav[aria-label="Primary"] a').forEach((a, i) => {
+        if (navLabels[i]) a.textContent = navLabels[i];
+      });
+
+      /* Re-render current slide content */
+      setContent(current);
     }
 
     /* ── Transition to a given slide ─────────────────────────── */
@@ -769,7 +868,7 @@
 
     /* ── Init ────────────────────────────────────────────────── */
     buildThumbs();
-    setContent(0);
+    setLang('id'); /* init with Bahasa Indonesia */
     setTimeout(() => {
       const bar = document.getElementById('tprog-0');
       if (bar) { void bar.offsetWidth; bar.classList.add('is-running'); }
