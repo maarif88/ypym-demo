@@ -678,8 +678,8 @@
         desc_id: 'Lebih dari 50 tahun keunggulan manufaktur. Proses bersertifikasi ISO, kontrol kualitas ketat, dan integritas struktural yang bertahan puluhan tahun.',
         cta:     'Explore Products',
         cta_id:  'Lihat Produk',
-        heading: ['Strength Built', 'Into Every', 'Steel Profile'],
-        heading_id: ['Kekuatan Terbangun', 'di Setiap', 'Profil Baja'],
+        heading: 'Strength Built Into Every Steel Profile',
+        heading_id: 'Kekuatan Terbangun di Setiap Profil Baja',
         label:   'ISO-Certified Manufacturing',
         label_id:'Manufaktur Bersertifikasi ISO',
       },
@@ -692,8 +692,8 @@
         desc_id: 'Dari rumah tinggal hingga kawasan industri besar, sistem atap kami memberikan perlindungan cuaca superior, efisiensi termal, dan daya tahan jangka panjang.',
         cta:     'View Roofing Solutions',
         cta_id:  'Lihat Solusi Atap',
-        heading: ['Roofing That', 'Stands the Test', 'of Time'],
-        heading_id: ['Atap yang', 'Teruji Melewati', 'Waktu'],
+        heading: 'Roofing That Stands the Test of Time',
+        heading_id: 'Atap yang Teruji Melewati Waktu',
         label:   'Nationwide Distribution',
         label_id:'Distribusi Seluruh Indonesia',
       },
@@ -706,8 +706,8 @@
         desc_id: 'Dipercaya oleh kontraktor dan developer terkemuka di seluruh Indonesia. Baja struktural kami menghadirkan performa beban dan presisi dimensional yang dibutuhkan proyek Anda.',
         cta:     'See Our Projects',
         cta_id:  'Lihat Proyek Kami',
-        heading: ['Building the', 'Infrastructure', 'of Tomorrow'],
-        heading_id: ['Membangun', 'Infrastruktur', 'Masa Depan'],
+        heading: 'Building the Infrastructure of Tomorrow',
+        heading_id: 'Membangun Infrastruktur Masa Depan',
         label:   'Trusted Since 1972',
         label_id:'Dipercaya Sejak 1972',
       },
@@ -720,8 +720,8 @@
         desc_id: 'Pabrik modern kami beroperasi dengan mesin roll-forming berteknologi tinggi, pemantauan kualitas berkelanjutan, dan tim 500+ profesional terlatih.',
         cta:     'Learn About Us',
         cta_id:  'Tentang Kami',
-        heading: ['Made in', 'Indonesia, Built', 'for the World'],
-        heading_id: ['Buatan', 'Indonesia, untuk', 'Dunia'],
+        heading: 'Made in Indonesia, Built for the World',
+        heading_id: 'Buatan Indonesia, untuk Dunia',
         label:   '500+ Expert Team',
         label_id:'500+ Tim Ahli',
       },
@@ -793,9 +793,8 @@
       cardCtaText.textContent = id ? (s.cta_id     || s.cta)     : s.cta;
       slideLabel.textContent  = id ? (s.label_id   || s.label)   : s.label;
       const hl = id ? (s.heading_id || s.heading) : s.heading;
-      const html = hl.map(l => `<span class="block">${l}</span>`).join('');
-      heroHl.innerHTML    = html;
-      heroHlMob.innerHTML = html;
+      heroHl.textContent    = hl;
+      heroHlMob.textContent = hl;
     }
 
     /* ── Language toggle ─────────────────────────────────────── */
