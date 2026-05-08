@@ -1188,16 +1188,16 @@
          aria-hidden="true">
       <!-- Base bg matching footer color -->
       <div class="absolute inset-0 bg-[#f0f0ee]"></div>
-      <!-- Map image: right-aligned, covers right 65% of footer -->
+      <!-- Map image: anchored to right edge, vertically centered, width ~55% of container -->
       <img src="./map.svg" alt=""
-           class="absolute top-0 right-0 h-full w-auto"
-           style="max-height: 100%; min-width: 55%;">
+           class="absolute"
+           style="right: 0; top: 50%; transform: translateY(-50%); width: 58%; height: auto; min-width: 480px;">
     </div>
 
-    <!-- Left white gradient fade — content side -->
+    <!-- Left gradient fade — only covers left portion where content lives -->
     <div class="absolute inset-0 z-10 pointer-events-none" aria-hidden="true">
       <div class="absolute inset-0"
-           style="background: linear-gradient(to right, #ffffff 0%, #ffffff 30%, rgba(255,255,255,0.90) 52%, rgba(255,255,255,0.30) 72%, rgba(255,255,255,0) 100%);"></div>
+           style="background: linear-gradient(to right, #f0f0ee 0%, #f0f0ee 38%, rgba(240,240,238,0.92) 50%, rgba(240,240,238,0.30) 60%, rgba(240,240,238,0) 70%);"></div>
       <!-- Bottom gradient for bottom bar -->
       <div class="absolute bottom-0 left-0 right-0 h-20"
            style="background: linear-gradient(to top, rgba(240,240,238,0.95), transparent);"></div>
