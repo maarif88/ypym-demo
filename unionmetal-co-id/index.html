@@ -12,6 +12,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Gloock&display=swap" rel="stylesheet">
 
+  <!-- Leaflet.js CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -1578,116 +1581,12 @@
   ============================================================ -->
   <footer class="relative overflow-hidden" style="height: 730px;">
 
-    <!-- Google Maps full bleed iframe — Indonesia country view, zoom 5 -->
-    <iframe
-      src="https://maps.google.com/maps?ll=-2,118&z=5&output=embed&hl=en"
-      width="100%" height="100%"
-      style="border:0; display:block; filter: grayscale(20%) contrast(1.05) brightness(0.95);"
-      allowfullscreen="" loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-      title="PT. Union Metal - Indonesia Locations">
-    </iframe>
+    <!-- Leaflet dark map (CartoDB Dark Matter) — markers embedded as real map objects -->
+    <div id="footer-map" style="position:absolute;inset:0;z-index:1;"></div>
 
     <!-- Top gradient: seamless blend from project showcase (#0f0f0f) into map -->
     <div class="absolute top-0 left-0 right-0 z-10 pointer-events-none" aria-hidden="true"
          style="height: 140px; background: linear-gradient(to bottom, #0f0f0f 0%, rgba(15,15,15,0.65) 50%, transparent 100%);"></div>
-
-    <!-- City location pins overlay (approximate geo positions) -->
-    <div class="absolute inset-0 z-[15] pointer-events-none" aria-hidden="true"
-         style="font-family:'Archivo',sans-serif;">
-
-      <!-- Medan -->
-      <div style="position:absolute;left:19.8%;top:32.5%;transform:translate(-50%,-100%);">
-        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
-          <span style="font-size:9.5px;color:#fff;white-space:nowrap;background:rgba(0,0,0,0.62);padding:1px 6px;border-radius:4px;font-weight:600;line-height:1.6;letter-spacing:0.02em;">Medan</span>
-          <div style="width:7px;height:7px;border-radius:50%;background:#E8650A;border:1.5px solid rgba(255,255,255,0.9);box-shadow:0 1px 5px rgba(0,0,0,0.5);"></div>
-        </div>
-      </div>
-
-      <!-- Palembang -->
-      <div style="position:absolute;left:29.2%;top:53.1%;transform:translate(-50%,-100%);">
-        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
-          <span style="font-size:9.5px;color:#fff;white-space:nowrap;background:rgba(0,0,0,0.62);padding:1px 6px;border-radius:4px;font-weight:600;line-height:1.6;letter-spacing:0.02em;">Palembang</span>
-          <div style="width:7px;height:7px;border-radius:50%;background:#E8650A;border:1.5px solid rgba(255,255,255,0.9);box-shadow:0 1px 5px rgba(0,0,0,0.5);"></div>
-        </div>
-      </div>
-
-      <!-- Tangerang -->
-      <div style="position:absolute;left:31%;top:61%;transform:translate(-50%,-100%);">
-        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
-          <span style="font-size:9.5px;color:#fff;white-space:nowrap;background:rgba(0,0,0,0.62);padding:1px 6px;border-radius:4px;font-weight:600;line-height:1.6;letter-spacing:0.02em;">Tangerang</span>
-          <div style="width:7px;height:7px;border-radius:50%;background:#E8650A;border:1.5px solid rgba(255,255,255,0.9);box-shadow:0 1px 5px rgba(0,0,0,0.5);"></div>
-        </div>
-      </div>
-
-      <!-- Jakarta -->
-      <div style="position:absolute;left:32.5%;top:64.5%;transform:translate(-50%,-100%);">
-        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
-          <span style="font-size:9.5px;color:#fff;white-space:nowrap;background:rgba(0,0,0,0.62);padding:1px 6px;border-radius:4px;font-weight:600;line-height:1.6;letter-spacing:0.02em;">Jakarta</span>
-          <div style="width:7px;height:7px;border-radius:50%;background:#E8650A;border:1.5px solid rgba(255,255,255,0.9);box-shadow:0 1px 5px rgba(0,0,0,0.5);"></div>
-        </div>
-      </div>
-
-      <!-- Bekasi HQ -->
-      <div style="position:absolute;left:34%;top:66%;transform:translate(-50%,-100%);">
-        <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-          <span style="font-size:9.5px;color:#E8650A;white-space:nowrap;background:rgba(255,255,255,0.95);padding:2px 8px;border-radius:4px;font-weight:700;line-height:1.5;box-shadow:0 1px 6px rgba(0,0,0,0.22);">HQ Bekasi</span>
-          <div style="position:relative;display:flex;align-items:center;justify-content:center;width:16px;height:16px;">
-            <div style="position:absolute;inset:0;border-radius:50%;background:rgba(232,101,10,0.28);animation:pin-pulse 2.2s ease-in-out infinite;"></div>
-            <div style="width:10px;height:10px;border-radius:50%;background:#E8650A;border:2px solid white;box-shadow:0 2px 8px rgba(232,101,10,0.6);position:relative;z-index:1;"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Bandung -->
-      <div style="position:absolute;left:35.2%;top:69.5%;transform:translate(-50%,-100%);">
-        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
-          <span style="font-size:9.5px;color:#fff;white-space:nowrap;background:rgba(0,0,0,0.62);padding:1px 6px;border-radius:4px;font-weight:600;line-height:1.6;letter-spacing:0.02em;">Bandung</span>
-          <div style="width:7px;height:7px;border-radius:50%;background:#E8650A;border:1.5px solid rgba(255,255,255,0.9);box-shadow:0 1px 5px rgba(0,0,0,0.5);"></div>
-        </div>
-      </div>
-
-      <!-- Semarang -->
-      <div style="position:absolute;left:38.1%;top:67%;transform:translate(-50%,-100%);">
-        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
-          <span style="font-size:9.5px;color:#fff;white-space:nowrap;background:rgba(0,0,0,0.62);padding:1px 6px;border-radius:4px;font-weight:600;line-height:1.6;letter-spacing:0.02em;">Semarang</span>
-          <div style="width:7px;height:7px;border-radius:50%;background:#E8650A;border:1.5px solid rgba(255,255,255,0.9);box-shadow:0 1px 5px rgba(0,0,0,0.5);"></div>
-        </div>
-      </div>
-
-      <!-- Surabaya -->
-      <div style="position:absolute;left:41.7%;top:68%;transform:translate(-50%,-100%);">
-        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
-          <span style="font-size:9.5px;color:#fff;white-space:nowrap;background:rgba(0,0,0,0.62);padding:1px 6px;border-radius:4px;font-weight:600;line-height:1.6;letter-spacing:0.02em;">Surabaya</span>
-          <div style="width:7px;height:7px;border-radius:50%;background:#E8650A;border:1.5px solid rgba(255,255,255,0.9);box-shadow:0 1px 5px rgba(0,0,0,0.5);"></div>
-        </div>
-      </div>
-
-      <!-- Denpasar -->
-      <div style="position:absolute;left:45.6%;top:73%;transform:translate(-50%,-100%);">
-        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
-          <span style="font-size:9.5px;color:#fff;white-space:nowrap;background:rgba(0,0,0,0.62);padding:1px 6px;border-radius:4px;font-weight:600;line-height:1.6;letter-spacing:0.02em;">Denpasar</span>
-          <div style="width:7px;height:7px;border-radius:50%;background:#E8650A;border:1.5px solid rgba(255,255,255,0.9);box-shadow:0 1px 5px rgba(0,0,0,0.5);"></div>
-        </div>
-      </div>
-
-      <!-- Balikpapan -->
-      <div style="position:absolute;left:48.1%;top:47%;transform:translate(-50%,-100%);">
-        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
-          <span style="font-size:9.5px;color:#fff;white-space:nowrap;background:rgba(0,0,0,0.62);padding:1px 6px;border-radius:4px;font-weight:600;line-height:1.6;letter-spacing:0.02em;">Balikpapan</span>
-          <div style="width:7px;height:7px;border-radius:50%;background:#E8650A;border:1.5px solid rgba(255,255,255,0.9);box-shadow:0 1px 5px rgba(0,0,0,0.5);"></div>
-        </div>
-      </div>
-
-      <!-- Makassar -->
-      <div style="position:absolute;left:52.2%;top:60%;transform:translate(-50%,-100%);">
-        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
-          <span style="font-size:9.5px;color:#fff;white-space:nowrap;background:rgba(0,0,0,0.62);padding:1px 6px;border-radius:4px;font-weight:600;line-height:1.6;letter-spacing:0.02em;">Makassar</span>
-          <div style="width:7px;height:7px;border-radius:50%;background:#E8650A;border:1.5px solid rgba(255,255,255,0.9);box-shadow:0 1px 5px rgba(0,0,0,0.5);"></div>
-        </div>
-      </div>
-
-    </div>
 
     <!-- Contact card: left side, vertically centered -->
     <div class="absolute top-1/2 left-0 z-20 -translate-y-1/2
@@ -1774,7 +1673,7 @@
     </div>
 
     <!-- Bottom bar — sits over map -->
-    <div class="absolute bottom-0 left-0 right-0 z-20 bg-[#111111]/90 backdrop-blur-sm border-t border-white/8">
+    <div class="absolute bottom-0 left-0 right-0 z-20 bg-black/[0.05] backdrop-blur-sm border-t border-white/[0.06]">
       <div class="max-w-screen-xl mx-auto px-5 sm:px-8 xl:px-12 py-3.5
                   flex flex-col sm:flex-row items-center justify-between gap-2">
         <p class="text-white/35 text-[11.5px]">
@@ -1791,6 +1690,65 @@
     </div>
 
   </footer>
+
+  <!-- Leaflet.js — footer dark map init -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    (function () {
+      var map = L.map('footer-map', {
+        center: [-2, 118],
+        zoom: 5,
+        zoomControl: false,
+        scrollWheelZoom: false,
+        attributionControl: false,
+        dragging: !L.Browser.mobile,
+        tap: false,
+      });
+
+      // CartoDB Dark Matter tiles — dark mode, no API key needed
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19,
+        subdomains: 'abcd',
+      }).addTo(map);
+
+      var cities = [
+        { n: 'Medan',      lat:  3.5952, lng:  98.6722, hq: false },
+        { n: 'Palembang',  lat: -2.9761, lng: 104.7754, hq: false },
+        { n: 'Tangerang',  lat: -6.1783, lng: 106.6319, hq: false },
+        { n: 'Jakarta',    lat: -6.2088, lng: 106.8456, hq: false },
+        { n: 'Bandung',    lat: -6.9175, lng: 107.6191, hq: false },
+        { n: 'Semarang',   lat: -6.9932, lng: 110.4203, hq: false },
+        { n: 'Surabaya',   lat: -7.2504, lng: 112.7688, hq: false },
+        { n: 'Denpasar',   lat: -8.6705, lng: 115.2126, hq: false },
+        { n: 'Balikpapan', lat: -1.2675, lng: 116.8289, hq: false },
+        { n: 'Makassar',   lat: -5.1477, lng: 119.4327, hq: false },
+        { n: 'HQ Bekasi',  lat: -6.2383, lng: 107.0000, hq: true  },
+      ];
+
+      cities.forEach(function (c) {
+        var html, sz, anchor;
+        if (c.hq) {
+          html = '<div style="display:flex;flex-direction:column;align-items:center;gap:3px;">'
+               + '<span style="font-size:9.5px;color:#E8650A;white-space:nowrap;background:rgba(255,255,255,0.95);padding:2px 8px;border-radius:4px;font-weight:700;line-height:1.5;font-family:Archivo,sans-serif;box-shadow:0 1px 6px rgba(0,0,0,0.22);">HQ Bekasi</span>'
+               + '<div style="position:relative;display:flex;align-items:center;justify-content:center;width:16px;height:16px;">'
+               + '<div style="position:absolute;inset:0;border-radius:50%;background:rgba(232,101,10,0.28);animation:pin-pulse 2.2s ease-in-out infinite;"></div>'
+               + '<div style="width:10px;height:10px;border-radius:50%;background:#E8650A;border:2px solid white;box-shadow:0 2px 8px rgba(232,101,10,0.6);position:relative;z-index:1;"></div>'
+               + '</div></div>';
+          sz = [90, 40]; anchor = [45, 40];
+        } else {
+          html = '<div style="display:flex;flex-direction:column;align-items:center;gap:2px;">'
+               + '<span style="font-size:9.5px;color:#fff;white-space:nowrap;background:rgba(0,0,0,0.65);padding:1px 6px;border-radius:4px;font-weight:600;line-height:1.6;font-family:Archivo,sans-serif;">' + c.n + '</span>'
+               + '<div style="width:7px;height:7px;border-radius:50%;background:#E8650A;border:1.5px solid rgba(255,255,255,0.9);box-shadow:0 1px 5px rgba(0,0,0,0.5);"></div>'
+               + '</div>';
+          sz = [80, 28]; anchor = [40, 28];
+        }
+        L.marker([c.lat, c.lng], {
+          icon: L.divIcon({ className: '', html: html, iconSize: sz, iconAnchor: anchor }),
+          interactive: false,
+        }).addTo(map);
+      });
+    })();
+  </script>
 
 </body>
 </html>
