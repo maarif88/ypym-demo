@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -516,26 +517,373 @@
       .hs-card { max-width: 100%; height: 60vw; min-height: 280px; max-height: 480px; }
     }
 
-    /* ─── FOOTER ──────────────────────────────────────────── */
-    .footer {
-      background: var(--ink);
-      border-top: 1px solid var(--w06);
-      padding: 52px 32px;
-      text-align: center;
+    /* ─── TESTIMONY SECTION ─────────────────────────────────── */
+    .testimony-section {
+      position: relative;
+      padding: 96px 0 80px;
+      overflow: hidden;
     }
-    .footer-brand {
+    .ts-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.pexels.com/photos/6130044/pexels-photo-6130044.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover no-repeat;
+    }
+    .ts-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, rgba(4,4,8,0.90) 0%, rgba(14,14,24,0.82) 100%);
+    }
+    .ts-inner {
+      position: relative; z-index: 1;
+      max-width: 1240px; margin: 0 auto; padding: 0 48px;
+    }
+    .ts-head {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 44px;
+    }
+    .ts-label {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(255,255,255,0.40);
+      margin-bottom: 10px;
+    }
+    .ts-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 16px; letter-spacing: 0.28em;
-      color: var(--w30); margin-bottom: 8px;
+      font-size: clamp(28px, 3.2vw, 46px); font-weight: 400;
+      color: white; line-height: 1.15; font-style: italic;
     }
-    .footer-copy { font-size: 10.5px; color: rgba(255,255,255,0.15); letter-spacing: 0.05em; }
-    .back-link {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 11px; color: var(--w30);
-      text-decoration: none; margin-top: 22px;
-      letter-spacing: 0.04em; transition: color 0.2s;
+    .ts-nav {
+      display: flex; align-items: center; gap: 14px;
+      flex-shrink: 0; padding-bottom: 4px;
     }
-    .back-link:hover { color: white; }
+    .ts-nav-btn {
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.07);
+      color: white; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    }
+    .ts-nav-btn:hover { background: rgba(255,255,255,0.16); border-color: rgba(255,255,255,0.45); transform: scale(1.05); }
+    .ts-count {
+      font-size: 11px; color: rgba(255,255,255,0.38);
+      letter-spacing: 0.08em; min-width: 32px; text-align: center;
+    }
+    .ts-slider-wrap { overflow: hidden; }
+    .ts-track {
+      display: flex; gap: 20px;
+      transition: transform 0.50s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .tc {
+      flex: 0 0 calc((100% - 40px) / 3);
+      background: white; border-radius: 16px;
+      padding: 22px 22px 18px;
+      display: flex; flex-direction: column; gap: 10px;
+      box-shadow: 0 6px 28px rgba(0,0,0,0.22);
+    }
+    .tc-top { display: flex; align-items: center; gap: 10px; }
+    .tc-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 14px; color: white;
+      flex-shrink: 0; letter-spacing: 0.02em;
+    }
+    .tc-info { flex: 1; min-width: 0; }
+    .tc-name {
+      font-weight: 600; font-size: 14px; color: #1a1a1a;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .tc-meta { font-size: 11px; color: #4285F4; margin-top: 1px; }
+    .tc-stars { color: #fbbc04; font-size: 13px; letter-spacing: 1px; line-height: 1; }
+    .tc-hotel {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #bbb; margin-top: -3px;
+    }
+    .tc-text {
+      font-size: 13px; color: #3a3a3a; line-height: 1.65; flex: 1;
+      display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .tc-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 2px;
+    }
+    .tc-date { font-size: 11px; color: #bbb; }
+    .tc-photos { display: flex; gap: 5px; }
+    .tc-photos img { width: 44px; height: 44px; border-radius: 6px; object-fit: cover; }
+    .ts-dots {
+      display: flex; justify-content: center; gap: 8px; margin-top: 36px;
+    }
+    .ts-dot {
+      height: 6px; border-radius: 3px;
+      background: rgba(255,255,255,0.28); cursor: pointer;
+      transition: background 0.25s, width 0.25s; width: 6px;
+    }
+    .ts-dot.active { background: white; width: 22px; }
+    @media (max-width: 900px) {
+      .ts-inner { padding: 0 24px; }
+      .ts-head { flex-direction: column; align-items: flex-start; gap: 18px; }
+      .tc { flex: 0 0 calc((100% - 20px) / 2); }
+    }
+    @media (max-width: 580px) {
+      .tc { flex: 0 0 82vw; }
+      .testimony-section { padding: 64px 0 56px; }
+    }
+
+    /* ─── LANDMARK SECTION ──────────────────────────────────── */
+    .landmark-section {
+      position: relative;
+      width: 100%;
+      height: 88vh;
+      min-height: 540px;
+      overflow: hidden;
+      background: #000;
+    }
+    .lm-bg-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      z-index: 0;
+      opacity: 1;
+      transition: opacity 0.38s ease;
+    }
+    .lm-bg-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(0,0,0,0.22) 0%,
+        rgba(0,0,0,0.10) 42%,
+        rgba(0,0,0,0.72) 100%
+      );
+      z-index: 1;
+    }
+    .lm-content {
+      position: relative; z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 56px 56px 44px;
+    }
+    .lm-label {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(255,255,255,0.55);
+      margin-bottom: 10px;
+    }
+    .lm-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 3.5vw, 50px); font-weight: 400;
+      color: white; line-height: 1.12; font-style: italic;
+    }
+    .lm-strip {
+      display: flex;
+      gap: 10px;
+    }
+    .lm-card {
+      flex: 1;
+      height: 92px;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      opacity: 0.40;
+      transition: flex 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.3s ease,
+                  box-shadow 0.3s ease;
+    }
+    .lm-card.active {
+      flex: 2.5;
+      opacity: 1;
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.58);
+    }
+    .lm-card:not(.active):hover {
+      flex: 1.7;
+      opacity: 0.74;
+    }
+    .lm-card-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+    }
+    .lm-card-grad {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 25%, rgba(0,0,0,0.78) 100%);
+    }
+    .lm-card-info {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 8px 12px 10px;
+    }
+    .lm-card-badge {
+      font-size: 8px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(255,255,255,0.52);
+      margin-bottom: 2px;
+    }
+    .lm-card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px; font-weight: 400; color: white;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    @media (max-width: 900px) {
+      .lm-content { padding: 40px 24px 28px; }
+      .lm-card { height: 72px; }
+      .lm-card-name { font-size: 12px; }
+    }
+    @media (max-width: 580px) {
+      .landmark-section { height: 72vh; }
+      .lm-card { height: 58px; border-radius: 8px; }
+      .lm-card-badge { display: none; }
+    }
+
+    /* ─── MAP SECTION ──────────────────────────────────────── */
+    .map-section { position: relative; width: 100%; background: #000; }
+    .xenias-map { width: 100%; height: 700px; }
+    .map-section::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 160px; background: linear-gradient(to bottom, #000 0%, transparent 100%);
+      z-index: 1100; pointer-events: none;
+    }
+    .map-ol-head {
+      position: absolute; top: 20px; left: 28px; z-index: 1200; pointer-events: none;
+    }
+    .map-ol-label {
+      font-size: 9px; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(255,255,255,0.65);
+      margin-bottom: 4px; text-shadow: 0 1px 5px rgba(0,0,0,0.65);
+    }
+    .map-ol-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px; font-weight: 400; font-style: italic;
+      color: white; text-shadow: 0 2px 8px rgba(0,0,0,0.55);
+    }
+    .map-card-wrap {
+      position: absolute; bottom: 28px; left: 36px; z-index: 1500;
+      opacity: 0; transform: translateY(14px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+    }
+    .map-card-wrap.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    /* Markers */
+    .mp-hotel-wrap { position: relative; width: 44px; height: 50px; }
+    .mp-hotel-pin {
+      width: 36px; height: 36px; background: #c8a96e;
+      border-radius: 50% 50% 50% 0; transform: rotate(-45deg);
+      position: absolute; top: 0; left: 4px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .mp-hotel-letter {
+      transform: rotate(45deg); font-family: 'Cormorant Garamond', serif;
+      font-size: 14px; font-weight: 600; color: #0a0a0a;
+    }
+    .mp-hotel-pulse {
+      position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%);
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(200,169,110,0.28); animation: mapPulse 2.2s infinite;
+    }
+    @keyframes mapPulse {
+      0%   { transform: translateX(-50%) scale(0.4); opacity: 0.9; }
+      100% { transform: translateX(-50%) scale(2.2); opacity: 0; }
+    }
+    .mp-lm {
+      width: 30px; height: 30px; border-radius: 50%;
+      border: 2.5px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; cursor: pointer; transition: transform 0.15s;
+    }
+    /* Leaflet overrides */
+    .leaflet-control-attribution {
+      background: rgba(0,0,0,0.60) !important;
+      color: rgba(255,255,255,0.48) !important; font-size: 9px !important;
+    }
+    .leaflet-control-attribution a { color: rgba(255,255,255,0.60) !important; }
+    .leaflet-control-zoom a {
+      background: rgba(8,8,8,0.88) !important;
+      border-color: rgba(255,255,255,0.18) !important; color: white !important;
+    }
+    .leaflet-control-zoom a:hover { background: rgba(255,255,255,0.14) !important; }
+    /* Close button (shared) */
+    .mc-close {
+      position: absolute; top: 10px; right: 10px;
+      width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.18);
+      cursor: pointer; color: white; font-size: 15px;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 3; transition: background 0.2s;
+    }
+    .mc-close:hover { background: rgba(255,255,255,0.18); }
+    /* Hotel card */
+    .mc-hotel {
+      width: 300px; background: rgba(8,8,8,0.96);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.11); border-radius: 18px;
+      overflow: hidden; color: white;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.58); position: relative;
+    }
+    .mc-hotel-img { position: relative; height: 168px; overflow: hidden; }
+    .mc-hotel-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .mc-hotel-tag {
+      position: absolute; top: 12px; left: 12px;
+      background: #c8a96e; color: #000;
+      font-size: 9px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 3px 9px; border-radius: 20px;
+    }
+    .mc-hotel-body { padding: 16px 18px 14px; }
+    .mc-hotel-eyebrow {
+      font-size: 9px; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: #c8a96e; margin-bottom: 5px;
+    }
+    .mc-hotel-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-weight: 400; font-style: italic;
+      color: white; line-height: 1.2; margin-bottom: 11px;
+    }
+    .mc-chips { display: flex; gap: 6px; margin-bottom: 13px; }
+    .mc-chip {
+      padding: 4px 10px; border-radius: 20px;
+      font-size: 9px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.50);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .mc-chip.active {
+      background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.35); color: white;
+    }
+    .mc-hotel-foot {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 11px; border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .mc-price { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: white; }
+    .mc-price-sub { font-size: 10px; color: rgba(255,255,255,0.38); }
+    .mc-book-btn {
+      background: white; color: #000; border: none; cursor: pointer;
+      padding: 8px 18px; border-radius: 20px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+      transition: opacity 0.2s;
+    }
+    .mc-book-btn:hover { opacity: 0.85; }
+    /* Landmark card (70% of hotel width) */
+    .mc-landmark {
+      width: 212px; background: rgba(8,8,8,0.96);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.11); border-radius: 14px;
+      overflow: hidden; color: white;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.58); position: relative;
+    }
+    .mc-lm-head { height: 88px; display: flex; align-items: center; justify-content: center; }
+    .mc-lm-body { padding: 11px 14px 14px; }
+    .mc-lm-cat {
+      font-size: 8px; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; margin-bottom: 4px;
+    }
+    .mc-lm-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px; font-weight: 400; font-style: italic;
+      color: white; line-height: 1.2; margin-bottom: 7px;
+    }
+    .mc-lm-desc { font-size: 10px; color: rgba(255,255,255,0.50); line-height: 1.55; margin-bottom: 9px; }
+    .mc-lm-dist {
+      font-size: 9px; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.35);
+    }
+
+
 
     @media (max-width: 480px) {
       .nav { padding: 0 18px; }
@@ -719,27 +1067,70 @@
     </div>
   </section>
 
-  <!-- ===== FOOTER ===== -->
-  <footer class="footer">
-    <p class="footer-brand">XENIA HOSPITALITY GROUP</p>
-    <p class="footer-copy" data-i18n="footerCopy">&copy; 2026 Xenia Hospitality Group. All rights reserved.</p>
-    <a href="../" class="back-link">
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-        <path d="M10.5 6H1.5M5 2.5 1.5 6 5 9.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <span data-i18n="backLink">Back to demo hub</span>
-    </a>
-  </footer>
+  <!-- ===== TESTIMONY ===== -->
+  <section class="testimony-section" id="testimonySection">
+    <div class="ts-bg"></div>
+    <div class="ts-overlay"></div>
+    <div class="ts-inner">
+      <div class="ts-head">
+        <div>
+          <p class="ts-label" data-i18n="tsLabel">Guest Reviews</p>
+          <h2 class="ts-title" data-i18n="tsTitle">What Our Guests Are Saying</h2>
+        </div>
+        <div class="ts-nav">
+          <button class="ts-nav-btn" id="tsPrev" aria-label="Previous">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <span class="ts-count" id="tsCount">1 / 5</span>
+          <button class="ts-nav-btn" id="tsNext" aria-label="Next">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="ts-slider-wrap">
+        <div class="ts-track" id="tsTrack"></div>
+      </div>
+      <div class="ts-dots" id="tsDots"></div>
+    </div>
+  </section>
 
+  <!-- ===== LANDMARK ===== -->
+  <section class="landmark-section" id="landmarkSection">
+    <video id="lmBgVideo" class="lm-bg-video" autoplay muted loop playsinline></video>
+    <div class="lm-bg-overlay"></div>
+    <div class="lm-content">
+      <div class="lm-header">
+        <p class="lm-label" data-i18n="lmLabel">Explore the Area</p>
+        <h2 class="lm-title" data-i18n="lmTitle">Nearby Landmarks</h2>
+      </div>
+      <div class="lm-strip" id="lmStrip"></div>
+    </div>
+  </section>
+
+  <!-- ===== MAP SECTION ===== -->
+  <section class="map-section" id="mapSection">
+    <div class="map-ol-head">
+      <p class="map-ol-label">Location</p>
+      <p class="map-ol-title">Explore Surabaya</p>
+    </div>
+    <div id="xeniasMap" class="xenias-map"></div>
+    <div class="map-card-wrap" id="mapCardWrap">
+      <div id="mapCardContent"></div>
+    </div>
+  </section>
+
+
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
     // ─── HOTEL SHOWCASE VIDEOS ───────────────────────────────────────────────
     const HOTEL_VIDEOS = [
-      'video/12829048_1440_2560_60fps.mp4',
-      'video/14723393_1440_2560_24fps.mp4',
-      'video/12802057_1440_2560_30fps.mp4',
-      'video/18316225-uhd_1440_2560_30fps.mp4',
-      'video/13089393_1080_1920_30fps.mp4',
-      'video/15982841_1440_2560_30fps.mp4',
+      'https://videos.pexels.com/video-files/6474560/6474560-uhd_2160_4096_25fps.mp4',
+      'https://videos.pexels.com/video-files/6975424/6975424-uhd_2160_4096_25fps.mp4',
+      'https://videos.pexels.com/video-files/8847473/8847473-uhd_2160_4096_25fps.mp4',
+      'https://videos.pexels.com/video-files/8088642/8088642-uhd_2160_4096_24fps.mp4',
+      'https://videos.pexels.com/video-files/8087899/8087899-uhd_2160_4096_24fps.mp4',
+      'https://videos.pexels.com/video-files/10811233/10811233-hd_1080_1918_30fps.mp4',
     ];
 
     // ─── HOTEL DATA ──────────────────────────────────────────────────────────
@@ -845,10 +1236,12 @@
         scrollHint:  'Scroll to explore',
         sLabel:      'Our Properties',
         sTitle:      'Hotel Collections',
-        footerCopy:  '\u00a9 2026 Xenia Hospitality Group. All rights reserved.',
-        backLink:    'Back to demo hub',
         explore:     'Explore',
         allProp:     'All Properties',
+        tsLabel:     'Guest Reviews',
+        tsTitle:     'What Our Guests Are Saying',
+        lmLabel:     'Explore the Area',
+        lmTitle:     'Nearby Landmarks',
       },
       id: {
         navSub:      'Hospitality Group',
@@ -863,10 +1256,12 @@
         scrollHint:  'Gulir untuk menjelajahi',
         sLabel:      'Properti Kami',
         sTitle:      'Koleksi Hotel',
-        footerCopy:  '\u00a9 2026 Xenia Hospitality Group. Seluruh hak cipta dilindungi.',
-        backLink:    'Kembali ke demo hub',
         explore:     'Jelajahi',
         allProp:     'Semua Properti',
+        tsLabel:     'Ulasan Tamu',
+        tsTitle:     'Apa Kata Tamu Kami',
+        lmLabel:     'Jelajahi Sekitar',
+        lmTitle:     'Landmark Terdekat',
       },
     };
 
@@ -967,9 +1362,352 @@
 
       renderMiniCards(activeFilter);
       showHotel(hotelIdx, false);
+      renderLandmarks();
     }
 
     function setLang(l) { lang = l; applyI18n(); }
+
+    // ─── LANDMARKS ────────────────────────────────────────────────────────────────────
+    const LANDMARKS = [
+      {
+        badge: 'Culture',
+        nameEN: 'Sacred Temples', nameID: 'Kuil Suci',
+        descEN: 'Ancient Hindu temples and spiritual retreats', descID: 'Kuil Hindu kuno dan tempat meditasi',
+        video: 'https://videos.pexels.com/video-files/8960407/8960407-uhd_2560_1440_30fps.mp4',
+      },
+      {
+        badge: 'Nature',
+        nameEN: 'Volcanic Peaks', nameID: 'Puncak Vulkanik',
+        descEN: 'Majestic volcanic mountains and crater lakes', descID: 'Gunung berapi megah dan danau kawah',
+        video: 'https://videos.pexels.com/video-files/18598479/18598479-uhd_3840_2160_30fps.mp4',
+      },
+      {
+        badge: 'Urban',
+        nameEN: 'City Transit', nameID: 'Transportasi Kota',
+        descEN: 'Modern public transit connecting the city', descID: 'Transportasi umum modern penghubung kota',
+        video: 'https://videos.pexels.com/video-files/35386388/14993270_3840_2160_30fps.mp4',
+      },
+      {
+        badge: 'Coastal',
+        nameEN: 'Private Beaches', nameID: 'Pantai Privat',
+        descEN: 'Pristine white sand beaches and crystal waters', descID: 'Pantai pasir putih dengan air biru jernih',
+        video: 'https://videos.pexels.com/video-files/32947306/14041577_1920_1080_25fps.mp4',
+      },
+      {
+        badge: 'City',
+        nameEN: 'Business District', nameID: 'Kawasan Bisnis',
+        descEN: 'Vibrant financial and commercial hub', descID: 'Pusat keuangan dan komersial yang dinamis',
+        video: 'https://videos.pexels.com/video-files/30159548/12933206_1920_1080_25fps.mp4',
+      },
+    ];
+
+    let lmActive = -1;
+
+    function selectLandmark(idx) {
+      if (idx === lmActive) return;
+      lmActive = idx;
+      var bg = document.getElementById('lmBgVideo');
+      bg.style.opacity = '0';
+      setTimeout(function() {
+        bg.src = LANDMARKS[idx].video;
+        bg.load();
+        bg.play().catch(function(){});
+        bg.style.opacity = '1';
+      }, 380);
+      document.querySelectorAll('#lmStrip .lm-card').forEach(function(c, i) {
+        c.classList.toggle('active', i === idx);
+      });
+    }
+
+    function renderLandmarks() {
+      document.getElementById('lmStrip').innerHTML = LANDMARKS.map(function(lm, i) {
+        return '<div class="lm-card' + (i === 0 ? ' active' : '') + '" data-idx="' + i + '">'
+          + '<video class="lm-card-video" src="' + lm.video + '" muted preload="metadata" playsinline></video>'
+          + '<div class="lm-card-grad"></div>'
+          + '<div class="lm-card-info">'
+          + '<p class="lm-card-badge">' + lm.badge + '</p>'
+          + '<p class="lm-card-name">' + (lang === 'en' ? lm.nameEN : lm.nameID) + '</p>'
+          + '</div></div>';
+      }).join('');
+
+      // Seek card videos to first frame for thumbnail preview
+      document.querySelectorAll('#lmStrip .lm-card-video').forEach(function(v) {
+        v.addEventListener('loadedmetadata', function() { v.currentTime = 0.5; });
+      });
+
+      // Wire click events
+      document.querySelectorAll('#lmStrip .lm-card').forEach(function(c) {
+        c.addEventListener('click', function() { selectLandmark(parseInt(c.dataset.idx)); });
+      });
+
+      // Load initial background video (first card)
+      var bg = document.getElementById('lmBgVideo');
+      bg.src = LANDMARKS[0].video;
+      bg.load();
+      bg.play().catch(function(){});
+      lmActive = 0;
+    }
+
+    // ─── MAP ────────────────────────────────────────────────────────────────────
+    var MAP_CENTER = [-7.2575, 112.7521];
+    var MAP_LANDMARKS = [
+      {
+        name: 'Tugu Pahlawan', nameID: 'Tugu Pahlawan',
+        cat: 'National Monument', catID: 'Monumen Nasional',
+        desc: 'Iconic monument commemorating Indonesian independence heroes.',
+        descID: 'Monumen ikonik untuk mengenang pahlawan kemerdekaan Indonesia.',
+        dist: '1.8 km', coords: [-7.2456, 112.7375], color: '#e07b39', emoji: '\uD83C\uDFDB',
+      },
+      {
+        name: 'House of Sampoerna', nameID: 'House of Sampoerna',
+        cat: 'Heritage Museum', catID: 'Museum Warisan Budaya',
+        desc: 'Dutch colonial tobacco factory turned cultural museum.',
+        descID: 'Pabrik tembakau kolonial Belanda yang kini jadi museum budaya.',
+        dist: '3.5 km', coords: [-7.2270, 112.7330], color: '#8b6f47', emoji: '\uD83C\uDFFA',
+      },
+      {
+        name: 'Masjid Cheng Hoo', nameID: 'Masjid Cheng Hoo',
+        cat: 'Cultural Site', catID: 'Situs Budaya',
+        desc: 'Unique mosque blending Chinese and Islamic architecture.',
+        descID: 'Masjid unik memadukan arsitektur Tionghoa dan Islam.',
+        dist: '0.8 km', coords: [-7.2638, 112.7547], color: '#c0392b', emoji: '\uD83D\uDD4C',
+      },
+      {
+        name: 'Taman Bungkul', nameID: 'Taman Bungkul',
+        cat: 'City Park', catID: 'Taman Kota',
+        desc: 'Award-winning urban park loved by families and joggers.',
+        descID: 'Taman kota berpengharaan, favorit keluarga dan pelari.',
+        dist: '3.8 km', coords: [-7.2912, 112.7413], color: '#27ae60', emoji: '\uD83C\uDF33',
+      },
+      {
+        name: 'Monumen Kapal Selam', nameID: 'Monumen Kapal Selam',
+        cat: 'Naval Museum', catID: 'Museum Angkatan Laut',
+        desc: 'Retired KRI Pasopati submarine turned riverside museum.',
+        descID: 'Kapal selam KRI Pasopati yang kini jadi museum di tepi sungai.',
+        dist: '0.9 km', coords: [-7.2564, 112.7438], color: '#2980b9', emoji: '\uD83D\uDEA2',
+      },
+    ];
+    var xeniasMap = null;
+
+    function initMap() {
+      if (typeof L === 'undefined') return;
+      xeniasMap = L.map('xeniasMap', {
+        center: MAP_CENTER, zoom: 14, zoomControl: false, scrollWheelZoom: false,
+      });
+      L.control.zoom({ position: 'bottomright' }).addTo(xeniasMap);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+        subdomains: 'abcd', maxZoom: 19,
+      }).addTo(xeniasMap);
+      L.circle(MAP_CENTER, {
+        radius: 4000, color: '#c8a96e', weight: 1.5, opacity: 0.45,
+        fill: true, fillColor: '#c8a96e', fillOpacity: 0.06, dashArray: '8 6',
+      }).addTo(xeniasMap);
+      var hotelIcon = L.divIcon({
+        html: '<div class="mp-hotel-wrap"><div class="mp-hotel-pin"><span class="mp-hotel-letter">H</span></div><div class="mp-hotel-pulse"></div></div>',
+        className: '', iconSize: [44, 50], iconAnchor: [22, 50],
+      });
+      L.marker(MAP_CENTER, { icon: hotelIcon }).addTo(xeniasMap)
+        .on('click', function() { showMapCard('hotel', null); xeniasMap.panTo(MAP_CENTER); });
+      MAP_LANDMARKS.forEach(function(lm) {
+        var lmIcon = L.divIcon({
+          html: '<div class="mp-lm" style="background:' + lm.color + '" title="' + lm.name + '">' + lm.emoji + '</div>',
+          className: '', iconSize: [30, 30], iconAnchor: [15, 15],
+        });
+        L.marker(lm.coords, { icon: lmIcon }).addTo(xeniasMap)
+          .on('click', function() { showMapCard('landmark', lm); xeniasMap.panTo(lm.coords); });
+      });
+    }
+
+    function showMapCard(type, lm) {
+      document.getElementById('mapCardContent').innerHTML = type === 'hotel' ? buildHotelCard() : buildLandmarkCard(lm);
+      document.getElementById('mapCardWrap').classList.add('visible');
+    }
+    function closeMapCard() {
+      document.getElementById('mapCardWrap').classList.remove('visible');
+    }
+    function buildHotelCard() {
+      return '<div class="mc-hotel">'
+        + '<button class="mc-close" onclick="closeMapCard()">&#215;</button>'
+        + '<div class="mc-hotel-img">'
+        + '<img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600&q=80" alt="Hotel Room" loading="lazy">'
+        + '<span class="mc-hotel-tag">Featured</span>'
+        + '</div><div class="mc-hotel-body">'
+        + '<p class="mc-hotel-eyebrow">Xenia &middot; Surabaya</p>'
+        + '<h3 class="mc-hotel-name">Xenia Grand Surabaya</h3>'
+        + '<div class="mc-chips">'
+        + '<span class="mc-chip active">Deluxe</span>'
+        + '<span class="mc-chip">Suite</span>'
+        + '<span class="mc-chip">Villa</span>'
+        + '</div><div class="mc-hotel-foot">'
+        + '<div><div class="mc-price">IDR 2.4M</div><div class="mc-price-sub">/night &middot; incl. breakfast</div></div>'
+        + '<button class="mc-book-btn">Book Now</button>'
+        + '</div></div></div>';
+    }
+    function buildLandmarkCard(lm) {
+      var isID = lang === 'id';
+      return '<div class="mc-landmark">'
+        + '<button class="mc-close" onclick="closeMapCard()">&#215;</button>'
+        + '<div class="mc-lm-head" style="background:linear-gradient(135deg,' + lm.color + '22 0%,' + lm.color + '55 100%)">'
+        + '<span style="font-size:34px">' + lm.emoji + '</span>'
+        + '</div><div class="mc-lm-body">'
+        + '<p class="mc-lm-cat" style="color:' + lm.color + '">' + (isID ? lm.catID : lm.cat) + '</p>'
+        + '<h3 class="mc-lm-name">' + (isID ? lm.nameID : lm.name) + '</h3>'
+        + '<p class="mc-lm-desc">' + (isID ? lm.descID : lm.desc) + '</p>'
+        + '<p class="mc-lm-dist">' + lm.dist + ' ' + (isID ? 'dari hotel' : 'from hotel') + '</p>'
+        + '</div></div>';
+    }
+
+    // ─── TESTIMONY SLIDER ────────────────────────────────────────────────────
+    const TESTIMONIALS = [
+      {
+        name: 'Sarah Mitchell', initials: 'SM', color: '#c5a3a3',
+        meta: 'Local Guide · 47 reviews', stars: 5, date: '2 weeks ago',
+        hotel: 'Shanaya Sanctuary · Bali',
+        text: 'The most breathtaking property I have ever stayed at. The infinity pool overlooking the jungle canopy was absolutely surreal. Staff were incredibly attentive and the spa treatments were world-class.',
+        photos: ['https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=100&q=75','https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=100&q=75']
+      },
+      {
+        name: 'David Lim', initials: 'DL', color: '#8caad4',
+        meta: 'Local Guide · 112 reviews', stars: 5, date: '1 month ago',
+        hotel: 'Azure Horizon · Lombok',
+        text: 'Absolute paradise. Woke up to the sound of waves every morning. The private butler service made everything effortless. The overwater breakfast is something you simply must experience.',
+        photos: ['https://images.unsplash.com/photo-1540541338287-41700207dee6?w=100&q=75']
+      },
+      {
+        name: 'Rina Kusuma', initials: 'RK', color: '#8cbd8c',
+        meta: 'Kontributor Lokal · 28 ulasan', stars: 5, date: '3 minggu lalu',
+        hotel: 'Shanaya Sanctuary · Bali',
+        text: 'Luar biasa! Pemandangan dari villa sangat memukau. Pelayanan staf sangat ramah dan profesional. Makanan di restoran juga sangat enak. Pasti akan kembali lagi bersama keluarga.',
+        photos: null
+      },
+      {
+        name: 'Michael Torres', initials: 'MT', color: '#d4a847',
+        meta: 'Local Guide · 83 reviews', stars: 5, date: '2 months ago',
+        hotel: 'The Jimbaran Bay · Bali',
+        text: 'Stayed here for our honeymoon and it was perfect in every way. The sunset views from the clifftop restaurant were unforgettable. The seafood dinner by the beach was a magical experience we will cherish.',
+        photos: ['https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=100&q=75','https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=100&q=75','https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?w=100&q=75']
+      },
+      {
+        name: 'Priya Sharma', initials: 'PS', color: '#a87cc4',
+        meta: 'Local Guide · 61 reviews', stars: 5, date: '3 weeks ago',
+        hotel: 'Tropical Haven · Surabaya',
+        text: 'The rooftop pool with panoramic city views is stunning. Modern rooms with top-notch amenities and great location for exploring the city. The breakfast buffet was exceptional - fresh and incredibly diverse.',
+        photos: null
+      },
+      {
+        name: 'Ahmad Fauzi', initials: 'AF', color: '#d4875a',
+        meta: 'Kontributor Lokal · 55 ulasan', stars: 5, date: '1 bulan lalu',
+        hotel: 'Azure Horizon · Lombok',
+        text: 'Pengalaman menginap yang tak terlupakan. Pantai privat sangat bersih dan tenang. Hidangan seafood segar langsung dari nelayan lokal. Staf sangat membantu dan ramah sepanjang waktu.',
+        photos: ['https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=100&q=75']
+      },
+      {
+        name: 'Emma Whitfield', initials: 'EW', color: '#7abed4',
+        meta: 'Local Guide · 203 reviews', stars: 4, date: '5 weeks ago',
+        hotel: 'Shanaya Sanctuary · Bali',
+        text: 'Stunning resort with incredible jungle views. The villa pool was an absolute highlight. Service was mostly excellent, though check-in took longer than expected. The spa is a definite must-visit.',
+        photos: ['https://images.unsplash.com/photo-1609946860441-a51ffcf22208?w=100&q=75']
+      },
+      {
+        name: 'Budi Santoso', initials: 'BS', color: '#c4b87a',
+        meta: 'Panduan Lokal · 94 ulasan', stars: 5, date: '2 bulan lalu',
+        hotel: 'The Jimbaran Bay · Bali',
+        text: 'Salah satu resort terbaik yang pernah saya kunjungi. Pemandangan laut dari kamar sangat indah. Kolam renang infinity di tepi tebing benar-benar menakjubkan. Sangat direkomendasikan untuk keluarga.',
+        photos: null
+      },
+      {
+        name: 'Lisa Chen', initials: 'LC', color: '#9ac47a',
+        meta: 'Local Guide · 77 reviews', stars: 5, date: '1 month ago',
+        hotel: 'Tropical Haven · Surabaya',
+        text: 'Exceptional urban retreat. The rooms are spacious and impeccably designed. The sky bar offers breathtaking city panoramas. Business facilities are top-tier - perfect for corporate travelers.',
+        photos: ['https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=100&q=75','https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=100&q=75']
+      },
+      {
+        name: 'Thomas Keller', initials: 'TK', color: '#7ac4a8',
+        meta: 'Local Guide · 156 reviews', stars: 5, date: '6 weeks ago',
+        hotel: 'Azure Horizon · Lombok',
+        text: 'Found this hidden gem on a trip through Indonesia. The overwater bungalow was worth every penny. Crystal clear lagoon right below the deck. Snorkeling directly from the villa was absolutely magical.',
+        photos: ['https://images.unsplash.com/photo-1439130490301-25e322d88054?w=100&q=75']
+      },
+      {
+        name: 'Dewi Rahayu', initials: 'DR', color: '#c47aaa',
+        meta: 'Panduan Lokal · 41 ulasan', stars: 5, date: '3 minggu lalu',
+        hotel: 'Shanaya Sanctuary · Bali',
+        text: 'Merayakan anniversary di sini dan semuanya sempurna. Kamar sudah didekorasi dengan cantik saat kami tiba. Dinner romantis di tepi kolam dengan pemandangan hutan sangat berkesan.',
+        photos: ['https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=100&q=75']
+      },
+      {
+        name: 'James Harrison', initials: 'JH', color: '#8a7ad4',
+        meta: 'Local Guide · 88 reviews', stars: 5, date: '2 months ago',
+        hotel: 'The Jimbaran Bay · Bali',
+        text: 'Truly world-class. The architecture blends seamlessly with the natural landscape. The sunrise yoga session on the cliffside terrace is an experience I will never forget. Pure luxury at its finest.',
+        photos: null
+      },
+      {
+        name: 'Yuki Tanaka', initials: 'YT', color: '#d4a07a',
+        meta: 'Local Guide · 124 reviews', stars: 4, date: '7 weeks ago',
+        hotel: 'Tropical Haven · Surabaya',
+        text: 'Great city hotel with wonderful amenities. The pool area is well-maintained and staff speak excellent English and Japanese, which was a huge plus. Minor hiccups with room service timing, but overall a solid stay.',
+        photos: null
+      },
+      {
+        name: 'Marco Visconti', initials: 'MV', color: '#7aaad4',
+        meta: 'Local Guide · 218 reviews', stars: 5, date: '1 month ago',
+        hotel: 'Shanaya Sanctuary · Bali',
+        text: 'Non ci sono parole per descrivere questo posto. The private villa with its own plunge pool and jungle views was absolutely magical. The Balinese spa treatments were the highlight of our entire trip.',
+        photos: ['https://images.unsplash.com/photo-1563911302283-d2bc129e7570?w=100&q=75','https://images.unsplash.com/photo-1537953773345-d172ccf13cf4?w=100&q=75']
+      },
+    ];
+
+    const G_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>';
+
+    const TS_PAGE_STARTS = [0, 3, 6, 9, 11];
+    const TS_PAGES       = 5;
+    let tsIdx            = 0;
+
+    function renderTestimonials() {
+      const track = document.getElementById('tsTrack');
+      track.innerHTML = TESTIMONIALS.map(t => {
+        const stars = '\u2605'.repeat(t.stars) + '\u2606'.repeat(5 - t.stars);
+        const photosHtml = t.photos
+          ? '<div class="tc-photos">' + t.photos.map(p => '<img src="' + p + '" alt="" loading="lazy">').join('') + '</div>'
+          : '';
+        return '<div class="tc">'
+          + '<div class="tc-top">'
+          + '<div class="tc-avatar" style="background:' + t.color + '">' + t.initials + '</div>'
+          + '<div class="tc-info"><p class="tc-name">' + t.name + '</p><p class="tc-meta">' + t.meta + '</p></div>'
+          + G_SVG
+          + '</div>'
+          + '<div class="tc-stars">' + stars + '</div>'
+          + '<p class="tc-hotel">' + t.hotel + '</p>'
+          + '<p class="tc-text">' + t.text + '</p>'
+          + '<div class="tc-footer"><span class="tc-date">' + t.date + '</span>' + photosHtml + '</div>'
+          + '</div>';
+      }).join('');
+      document.getElementById('tsDots').innerHTML = Array.from({ length: TS_PAGES }, (_, i) =>
+        '<div class="ts-dot' + (i === 0 ? ' active' : '') + '" onclick="goTsPage(' + i + ')"></div>'
+      ).join('');
+      updateTsSlider();
+    }
+
+    function updateTsSlider() {
+      const cards = document.querySelectorAll('.tc');
+      if (!cards.length) return;
+      const cardW = cards[0].offsetWidth + 20;
+      document.getElementById('tsTrack').style.transform = 'translateX(-' + (TS_PAGE_STARTS[tsIdx] * cardW) + 'px)';
+      document.getElementById('tsCount').textContent = (tsIdx + 1) + ' / ' + TS_PAGES;
+      document.querySelectorAll('.ts-dot').forEach((d, i) => d.classList.toggle('active', i === tsIdx));
+    }
+
+    function goTsPage(idx) {
+      tsIdx = Math.max(0, Math.min(TS_PAGES - 1, idx));
+      updateTsSlider();
+    }
+
+    document.getElementById('tsPrev').addEventListener('click', () => goTsPage(tsIdx - 1));
+    document.getElementById('tsNext').addEventListener('click', () => goTsPage(tsIdx + 1));
+    window.addEventListener('resize', updateTsSlider);
 
     // ─── SCROLL LOGIC ────────────────────────────────────────────────────────
     function getHeroProgress() {
@@ -1053,12 +1791,13 @@
 
     // ─── VIDEO PLAYER ────────────────────────────────────────────────────────
     const VIDEO_LIST = [
-      { src: 'video/18598479-hd_1920_1080_30fps.mp4', label: 'Malang'      },
-      { src: 'video/8960407-hd_1920_1080_30fps.mp4',  label: 'Bali'        },
-      { src: 'video/18023426-hd_1920_1080_25fps.mp4', label: 'Bali'        },
-      { src: 'video/9098389-hd_1920_1080_25fps.mp4',  label: 'Surabaya'    },
-      { src: 'video/14291772_1920_1080_30fps.mp4',    label: 'Lombok'      },
-      { src: 'video/12933205_1280_720_25fps.mp4',     label: 'Budaya Bali' },
+      { src: 'https://videos.pexels.com/video-files/18598479/18598479-uhd_3840_2160_30fps.mp4', label: 'Bromo'       },
+      { src: 'https://videos.pexels.com/video-files/8960407/8960407-uhd_2560_1440_30fps.mp4',   label: 'Bali'        },
+      { src: 'https://videos.pexels.com/video-files/35386388/14993270_3840_2160_30fps.mp4',     label: 'Surabaya'    },
+      { src: 'https://videos.pexels.com/video-files/11832600/11832600-hd_1920_1080_50fps.mp4',  label: 'Bromo'       },
+      { src: 'https://videos.pexels.com/video-files/32947306/14041577_1920_1080_25fps.mp4',     label: 'Bali'        },
+      { src: 'https://videos.pexels.com/video-files/30159548/12933206_1920_1080_25fps.mp4',     label: 'Bali'        },
+      { src: 'https://videos.pexels.com/video-files/15469333/15469333-hd_1920_1080_24fps.mp4',  label: 'Semeru'      },
     ];
     const N_VIDS           = VIDEO_LIST.length;
     const bgVid            = document.getElementById('heroBgVideo');
@@ -1154,9 +1893,12 @@
       const params = new URLSearchParams(window.location.search);
       lang = params.get('lang') === 'id' ? 'id' : 'en';
       setDefaultDates();
+      renderTestimonials();
+      renderLandmarks();
       buildNavDots();
       applyI18n();
       switchVideo(0, false);
+      initMap();
     })();
   </script>
 </body>
