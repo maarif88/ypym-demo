@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xenia Hospitality Group</title>
+  <meta name="description" content="Xenia Hospitality Group — A curated collection of luxury hotels and resorts across Indonesia.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #0a0a0a;
+      --ink-900: #111111;
+      --white: #fafafa;
+      --w60: rgba(255,255,255,0.6);
+      --w30: rgba(255,255,255,0.3);
+      --w12: rgba(255,255,255,0.12);
+      --w06: rgba(255,255,255,0.06);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--ink);
+      color: var(--white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ─── NAV ───────────────────────────────────────────── */
+    .nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 200;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      transition: background 0.4s, border-color 0.4s;
+    }
+    .nav.opaque {
+      background: rgba(10,10,10,0.88);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--w12);
+    }
+    .nav-left { position: relative; height: 38px; min-width: 170px; }
+    .nav-brand, .nav-phone {
+      position: absolute; top: 0; left: 0;
+      display: flex; flex-direction: column; gap: 2px;
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+    /* In hero: show phone, hide brand */
+    .nav-brand { opacity: 0; pointer-events: none; transform: translateY(-6px); }
+    .nav-phone { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    /* Scrolled past hero: show brand, hide phone */
+    .nav.opaque .nav-brand { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .nav.opaque .nav-phone { opacity: 0; pointer-events: none; transform: translateY(6px); }
+    .nav-brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; font-weight: 600;
+      letter-spacing: 0.22em; color: white; line-height: 1;
+    }
+    .nav-brand-sub {
+      font-size: 8px; font-weight: 500;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--w30);
+    }
+    .nav-phone-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 22px; font-weight: 600;
+      letter-spacing: 0.04em; color: white; line-height: 1;
+      white-space: nowrap;
+    }
+    .nav-phone-tag {
+      font-size: 10.5px; font-weight: 500;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--w30); white-space: nowrap;
+    }
+    .lang-toggle { display: flex; align-items: center; gap: 4px; }
+    .lang-btn {
+      background: transparent; border: none;
+      font-family: 'Inter', sans-serif; font-size: 11px;
+      font-weight: 500; letter-spacing: 0.08em;
+      color: var(--w30); cursor: pointer;
+      padding: 5px 9px; border-radius: 4px;
+      transition: color 0.18s, background 0.18s;
+    }
+    .lang-btn.active { color: white; background: var(--w12); }
+    .lang-sep { font-size: 11px; color: var(--w30); user-select: none; }
+
+    /* ─── HERO SCROLL SPACE (sticky parallax container) ─── */
+    .hero-scroll-space { position: relative; height: 210vh; }
+
+    .hero {
+      position: sticky; top: 0;
+      height: 100vh; min-height: 600px;
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+
+    /* ─── HERO VIDEO ─────────────────────────────────────────── */
+    .hero-video {
+      position: absolute;
+      top: -20%; left: 0; right: 0;
+      width: 100%; height: 140%;
+      object-fit: cover;
+      will-change: transform;
+      z-index: 0;
+    }
+    .hero-fade {
+      position: absolute; inset: 0;
+      background: black; opacity: 0;
+      pointer-events: none; z-index: 2;
+      transition: opacity 0.35s ease;
+    }
+    .hero-fade.fading { opacity: 1; }
+
+    /* ─── GALLERY PANEL ──────────────────────────────────────── */
+    .gallery-panel {
+      position: absolute;
+      right: 24px; bottom: 36px;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+    }
+    .gc {
+      width: 160px; height: 90px;
+      border-radius: 9px; overflow: hidden;
+      position: relative; cursor: pointer;
+      flex-shrink: 0;
+      border: 1.5px solid transparent;
+      transition: opacity 0.5s ease, transform 0.45s ease, border-color 0.3s;
+    }
+    .gc[data-role="active"] {
+      opacity: 1; transform: scale(1);
+      border-color: rgba(255,255,255,0.55);
+    }
+    .gc[data-role="next"] {
+      opacity: 0.38; transform: scale(0.975);
+    }
+    .gc[data-role="next2"] {
+      opacity: 0.2; transform: scale(0.95);
+    }
+    .gc-video {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .gc-grad {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 35%, rgba(0,0,0,0.75) 100%);
+      pointer-events: none;
+    }
+    .gc-badge {
+      position: absolute; bottom: 20px; left: 8px; right: 8px;
+      font-size: 9px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,255,255,0.92);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .gc-prog-track {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px; background: rgba(255,255,255,0.15);
+    }
+    .gc-prog-fill {
+      height: 100%; width: 0%; background: white;
+      transition: width 0.25s linear;
+    }
+    .gc-playpause {
+      position: absolute; top: 7px; right: 7px;
+      width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(0,0,0,0.6);
+      border: 1.5px solid rgba(255,255,255,0.4);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; opacity: 0;
+      transition: opacity 0.2s;
+      padding: 0;
+    }
+    .gc[data-role="active"]:hover .gc-playpause { opacity: 1; }
+    .gc[data-role="active"].paused .gc-playpause { opacity: 1; }
+    @media (max-width: 600px) { .gallery-panel { display: none; } }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(10,10,10,0.52) 0%,
+        rgba(10,10,10,0.18) 30%,
+        rgba(10,10,10,0.55) 55%,
+        rgba(10,10,10,0.85) 72%,
+        rgba(10,10,10,1.0)  88%,
+        rgba(10,10,10,1.0)  100%
+      );
+    }
+
+    /* ─── HERO CONTENT ──────────────────────────────────── */
+    .hero-content {
+      position: relative; z-index: 10;
+      display: flex; flex-direction: column;
+      align-items: center; text-align: center;
+      width: 100%; padding: 0 20px;
+      max-width: 960px;
+    }
+    .hero-eyebrow {
+      font-size: 9.5px; font-weight: 500;
+      letter-spacing: 0.38em; text-transform: uppercase;
+      color: var(--w60); margin-bottom: 48px;
+      will-change: opacity, transform;
+    }
+    .hero-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(64px, 10vw, 116px);
+      font-weight: 400; line-height: 0.88;
+      letter-spacing: 0.05em; color: white;
+      will-change: opacity, transform;
+    }
+    .hero-title em { font-style: normal; }
+    .hero-title-a {
+      font-size: 1.28em;
+      line-height: 0;
+      display: inline-block;
+      vertical-align: middle;
+      font-weight: 400;
+    }
+    .hero-title-group {
+      font-size: clamp(12px, 1.3vw, 17px);
+      font-weight: 300; letter-spacing: 0.38em;
+      text-transform: uppercase; color: var(--w60);
+      margin-top: 12px; margin-bottom: 52px;
+      will-change: opacity, transform;
+    }
+
+    /* ─── BOOKING WIDGET ────────────────────────────────── */
+    .booking-widget {
+      width: 100%; max-width: 720px;
+      background: rgba(250,250,250,0.97);
+      backdrop-filter: blur(20px);
+      border-radius: 14px;
+      padding: 20px 22px;
+      box-shadow: 0 48px 120px rgba(0,0,0,0.48), 0 4px 24px rgba(0,0,0,0.2);
+      transition: max-width 0.65s cubic-bezier(0.16,1,0.3,1);
+      overflow: hidden;
+    }
+    .booking-widget.is-expanded { max-width: 880px; }
+
+    .booking-form {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    @media (min-width: 640px) {
+      .booking-form {
+        grid-template-columns: 1.5fr 1fr 1fr 0.7fr auto;
+        gap: 8px; align-items: end;
+      }
+    }
+    .bf-field { display: flex; flex-direction: column; gap: 4px; }
+    .bf-label {
+      font-size: 9px; font-weight: 600;
+      letter-spacing: 0.13em; text-transform: uppercase;
+      color: #737373;
+    }
+    .bf-input {
+      width: 100%; padding: 9px 11px;
+      font-size: 13.5px; font-family: 'Inter', sans-serif;
+      color: #171717; background: #f5f5f5;
+      border: 1.5px solid #e5e5e5; border-radius: 7px;
+      outline: none;
+      transition: border-color 0.18s;
+      appearance: none; -webkit-appearance: none;
+    }
+    .bf-input:focus { border-color: #171717; background: #fff; }
+    .bf-btn {
+      padding: 10px 20px; font-size: 12px;
+      font-weight: 600; font-family: 'Inter', sans-serif;
+      letter-spacing: 0.07em; color: white;
+      background: #0a0a0a; border: none;
+      border-radius: 7px; cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.18s, transform 0.1s;
+    }
+    .bf-btn:hover { background: #2a2a2a; }
+    .bf-btn:active { transform: scale(0.97); }
+
+    /* ─── EXPANDED BOOKING ───────────────────────────────── */
+    .booking-expanded {
+      max-height: 0; opacity: 0; overflow: hidden;
+      transition:
+        max-height 0.7s cubic-bezier(0.16,1,0.3,1),
+        opacity 0.45s ease 0.1s;
+    }
+    .booking-expanded.open { max-height: 700px; opacity: 1; }
+
+    .booking-divider { margin: 18px 0 0; border: none; border-top: 1px solid #e5e5e5; }
+
+    .location-tabs {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      padding: 14px 0 12px;
+    }
+    .ltab {
+      padding: 5px 14px; font-size: 11px;
+      font-weight: 500; font-family: 'Inter', sans-serif;
+      border: 1.5px solid #e5e5e5; border-radius: 20px;
+      cursor: pointer; color: #737373;
+      background: white; transition: all 0.18s;
+    }
+    .ltab:hover, .ltab.active {
+      background: #0a0a0a; color: white; border-color: #0a0a0a;
+    }
+
+    .mini-cards {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+    .mini-cards::-webkit-scrollbar { display: none; }
+    .mini-card {
+      flex-shrink: 0;
+      width: 224px;
+      height: 280px;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      scroll-snap-align: start;
+      transition: transform 0.25s, box-shadow 0.25s;
+      box-shadow: none;
+    }
+    .mini-card:hover { transform: translateY(-4px); }
+    .mini-card-img {
+      position: absolute; inset: 0;
+      background-size: cover;
+      background-position: center;
+      background-color: #ebebeb;
+      transition: transform 0.35s;
+    }
+    .mini-card:hover .mini-card-img { transform: scale(1.06); }
+    .mini-card-grad {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.08) 30%, rgba(0,0,0,0.72) 100%);
+      pointer-events: none;
+    }
+    .mini-card-body {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 10px 9px 11px;
+    }
+    .mini-card-name { font-size: 10.5px; font-weight: 700; color: white; line-height: 1.3; }
+    .mini-card-loc { font-size: 9px; color: rgba(255,255,255,0.72); margin-top: 3px; }
+
+    /* ─── SCROLL INDICATOR ───────────────────────────────── */
+    .scroll-hint {
+      position: absolute; bottom: 32px;
+      left: 50%; transform: translateX(-50%);
+      z-index: 10;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      pointer-events: none;
+    }
+    .scroll-hint-text { font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--w30); }
+    .scroll-mouse {
+      width: 20px; height: 32px;
+      border: 1.5px solid rgba(255,255,255,0.22);
+      border-radius: 10px;
+      display: flex; justify-content: center; padding-top: 6px;
+    }
+    .scroll-wheel {
+      width: 2.5px; height: 5px;
+      background: rgba(255,255,255,0.4); border-radius: 2px;
+      animation: scrollWheel 2.2s ease-in-out infinite;
+    }
+    @keyframes scrollWheel {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      65% { transform: translateY(8px); opacity: 0; }
+    }
+
+    /* ─── HOTELS SECTION (3-panel full-screen showcase) ─── */
+    .hotels-section {
+      position: relative; z-index: 10;
+      background: #0a0a0a;
+      height: 100vh; min-height: 600px;
+      display: flex; overflow: hidden;
+    }
+    /* Left panel */
+    .hs-left {
+      width: 30%; padding: 0 52px;
+      display: flex; flex-direction: column; justify-content: center;
+      border-right: 1px solid rgba(255,255,255,0.07);
+    }
+    .hs-counter {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.25em;
+      text-transform: uppercase; color: rgba(255,255,255,0.25);
+      margin-bottom: 38px;
+    }
+    .hs-category-tag {
+      font-size: 9px; font-weight: 600; letter-spacing: 0.28em;
+      text-transform: uppercase; color: rgba(255,255,255,0.32);
+      margin-bottom: 14px;
+    }
+    .hs-hotel-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(26px, 2.8vw, 42px);
+      font-weight: 300; line-height: 1.15;
+      letter-spacing: 0.02em; color: white;
+      margin-bottom: 22px;
+    }
+    .hs-desc {
+      font-size: 13px; font-weight: 300; line-height: 1.78;
+      color: rgba(255,255,255,0.45); margin-bottom: 28px;
+    }
+    .hs-features {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 52px;
+    }
+    .hs-feat-chip {
+      font-size: 9px; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.16); border-radius: 20px;
+      padding: 5px 13px; color: rgba(255,255,255,0.42);
+    }
+    .hs-nav { display: flex; align-items: center; gap: 14px; }
+    .hs-nav-btn {
+      width: 44px; height: 44px;
+      border: 1px solid rgba(255,255,255,0.18); border-radius: 50%;
+      background: transparent; display: flex; align-items: center;
+      justify-content: center; cursor: pointer;
+      color: rgba(255,255,255,0.55);
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .hs-nav-btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); color: white; }
+    .hs-nav-dots { display: flex; gap: 7px; align-items: center; margin-left: 4px; }
+    .hs-dot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: rgba(255,255,255,0.18); cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .hs-dot.active { background: white; transform: scale(1.5); }
+    /* Center panel */
+    .hs-center {
+      flex: 1; display: flex; align-items: center;
+      justify-content: center; padding: 28px 20px;
+    }
+    .hs-card {
+      width: 100%; max-width: 540px;
+      height: calc(100vh - 72px); max-height: 840px;
+      border-radius: 20px; overflow: hidden; position: relative; cursor: pointer;
+    }
+    .hs-card-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      background-color: #1a1a1a;
+    }
+    .hs-card-grad {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 38%, rgba(0,0,0,0.88) 100%);
+    }
+    .hs-card-text {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 28px 28px 34px;
+    }
+    .hs-card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px; font-weight: 400; color: white;
+      line-height: 1.2; margin-bottom: 8px;
+    }
+    .hs-card-subtag {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; color: rgba(255,255,255,0.52);
+    }
+    /* Right panel */
+    .hs-right {
+      width: 28%; padding: 0 52px;
+      display: flex; flex-direction: column; justify-content: center;
+      border-left: 1px solid rgba(255,255,255,0.07);
+    }
+    .hs-info-row { margin-bottom: 34px; }
+    .hs-info-label {
+      font-size: 9px; font-weight: 600; letter-spacing: 0.3em;
+      text-transform: uppercase; color: rgba(255,255,255,0.28);
+      margin-bottom: 10px;
+    }
+    .hs-info-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 400; color: white; line-height: 1.3;
+    }
+    .hs-info-price {
+      font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.45); margin-top: 4px;
+    }
+    .hs-divider { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 0 0 34px; }
+    .hs-book-btn {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; background: white; color: #0a0a0a;
+      border: none; border-radius: 10px; padding: 16px 22px;
+      font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; transition: background 0.2s, transform 0.2s;
+    }
+    .hs-book-btn:hover { background: #e8e8e8; transform: translateY(-1px); }
+    /* Fade transition */
+    .hs-fade { opacity: 1; transition: opacity 0.3s ease; }
+    .hs-fade.fading { opacity: 0; }
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hotels-section { height: auto; flex-direction: column; }
+      .hs-left, .hs-right { width: 100%; padding: 40px 24px; border: none; }
+      .hs-center { padding: 0 24px 24px; }
+      .hs-card { max-width: 100%; height: 60vw; min-height: 280px; max-height: 480px; }
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────────── */
+    .footer {
+      background: var(--ink);
+      border-top: 1px solid var(--w06);
+      padding: 52px 32px;
+      text-align: center;
+    }
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px; letter-spacing: 0.28em;
+      color: var(--w30); margin-bottom: 8px;
+    }
+    .footer-copy { font-size: 10.5px; color: rgba(255,255,255,0.15); letter-spacing: 0.05em; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; color: var(--w30);
+      text-decoration: none; margin-top: 22px;
+      letter-spacing: 0.04em; transition: color 0.2s;
+    }
+    .back-link:hover { color: white; }
+
+    @media (max-width: 480px) {
+      .nav { padding: 0 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAV ===== -->
+  <header class="nav" id="nav">
+    <div class="nav-left">
+      <div class="nav-brand">
+        <span class="nav-brand-name">XENIA</span>
+        <span class="nav-brand-sub" data-i18n="navSub">Hospitality Group</span>
+      </div>
+      <div class="nav-phone">
+        <span class="nav-phone-num">+62 21-000-5678</span>
+        <span class="nav-phone-tag">24/7 Free call from anywhere</span>
+      </div>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+      <span class="lang-sep">/</span>
+      <button class="lang-btn" id="btnID" onclick="setLang('id')">ID</button>
+    </div>
+  </header>
+
+  <!-- ===== HERO (sticky inside tall scroll container) ===== -->
+  <div class="hero-scroll-space" id="heroScrollSpace">
+    <section class="hero" id="hero">
+      <video class="hero-video" id="heroBgVideo" muted playsinline autoplay></video>
+      <div class="hero-fade" id="heroFade"></div>
+      <div class="hero-overlay"></div>
+
+      <div class="hero-content">
+        <p class="hero-eyebrow" id="heroEyebrow" data-i18n="heroEyebrow">Luxury. Curated. Exceptional.</p>
+        <h1 class="hero-title" id="heroTitle">xeni<span class="hero-title-a">A</span></h1>
+        <p class="hero-title-group" id="heroTitleGroup" data-i18n="heroGroup">Hospitality Group</p>
+
+        <!-- Booking Widget -->
+        <div class="booking-widget" id="bookingWidget">
+          <div class="booking-form">
+            <div class="bf-field">
+              <label class="bf-label" for="fDest" data-i18n="fDest">Destination</label>
+              <select class="bf-input" id="fDest">
+                <option value="" data-i18n-opt="allProp">All Properties</option>
+                <option value="bali">Bali</option>
+                <option value="lombok">Lombok</option>
+                <option value="surabaya">Surabaya</option>
+                <option value="jakarta">Jakarta</option>
+              </select>
+            </div>
+            <div class="bf-field">
+              <label class="bf-label" for="fCheckin" data-i18n="fCheckin">Check-in</label>
+              <input type="date" class="bf-input" id="fCheckin">
+            </div>
+            <div class="bf-field">
+              <label class="bf-label" for="fCheckout" data-i18n="fCheckout">Check-out</label>
+              <input type="date" class="bf-input" id="fCheckout">
+            </div>
+            <div class="bf-field">
+              <label class="bf-label" for="fGuests" data-i18n="fGuests">Guests</label>
+              <select class="bf-input" id="fGuests">
+                <option>1</option>
+                <option selected>2</option>
+                <option>3</option>
+                <option>4+</option>
+              </select>
+            </div>
+            <div class="bf-field">
+              <label class="bf-label" style="opacity:0" aria-hidden="true">.</label>
+              <button class="bf-btn" data-i18n="fSearch">Search</button>
+            </div>
+          </div>
+
+          <!-- Expanded: revealed on scroll -->
+          <div class="booking-expanded" id="bookingExpanded">
+            <hr class="booking-divider">
+            <div class="location-tabs" id="locationTabs">
+              <button class="ltab active" data-filter="all" data-i18n="tabAll">All Properties</button>
+              <button class="ltab" data-filter="bali">Bali</button>
+              <button class="ltab" data-filter="lombok">Lombok</button>
+              <button class="ltab" data-filter="surabaya">Surabaya</button>
+              <button class="ltab" data-filter="jakarta">Jakarta</button>
+            </div>
+            <div class="mini-cards" id="miniCards"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Gallery Panel -->
+      <div class="gallery-panel" id="galleryPanel">
+        <div class="gc" id="gc0" data-role="active">
+          <video class="gc-video" muted preload="metadata" playsinline></video>
+          <div class="gc-grad"></div>
+          <span class="gc-badge" id="gcbadge0"></span>
+          <div class="gc-prog-track"><div class="gc-prog-fill" id="gcprog0"></div></div>
+          <button class="gc-playpause" id="gcPlayPause" aria-label="Pause video">
+            <svg id="gcPlayPauseIcon" width="10" height="12" viewBox="0 0 10 12" fill="none" aria-hidden="true">
+              <rect x="0" y="0" width="3.5" height="12" rx="1.5" fill="white"/>
+              <rect x="6.5" y="0" width="3.5" height="12" rx="1.5" fill="white"/>
+            </svg>
+          </button>
+        </div>
+        <div class="gc" id="gc1" data-role="next">
+          <video class="gc-video" muted preload="metadata" playsinline></video>
+          <div class="gc-grad"></div>
+          <span class="gc-badge" id="gcbadge1"></span>
+          <div class="gc-prog-track"><div class="gc-prog-fill" id="gcprog1"></div></div>
+        </div>
+        <div class="gc" id="gc2" data-role="next2">
+          <video class="gc-video" muted preload="metadata" playsinline></video>
+          <div class="gc-grad"></div>
+          <span class="gc-badge" id="gcbadge2"></span>
+          <div class="gc-prog-track"><div class="gc-prog-fill" id="gcprog2"></div></div>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="scroll-hint" id="scrollHint">
+        <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+        <span class="scroll-hint-text" data-i18n="scrollHint">Scroll to explore</span>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== SECTION 2: HOTEL SHOWCASE ===== -->
+  <section class="hotels-section" id="hotelsSection">
+    <!-- Left: About the hotel -->
+    <div class="hs-left">
+      <p class="hs-counter" id="hsCounter">01 / 07</p>
+      <p class="hs-category-tag hs-fade" id="hsCategory"></p>
+      <h2 class="hs-hotel-name hs-fade" id="hsName"></h2>
+      <p class="hs-desc hs-fade" id="hsDesc"></p>
+      <div class="hs-features hs-fade" id="hsFeatures"></div>
+      <div class="hs-nav">
+        <button class="hs-nav-btn" id="hsPrev" aria-label="Previous hotel">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M10 13L5 8l5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="hs-nav-btn" id="hsNext" aria-label="Next hotel">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="hs-nav-dots" id="hsNavDots"></div>
+      </div>
+    </div>
+
+    <!-- Center: Image card -->
+    <div class="hs-center">
+      <div class="hs-card">
+        <video class="hs-card-video hs-fade" id="hsCardVideo" autoplay muted loop playsinline></video>
+        <div class="hs-card-grad"></div>
+        <div class="hs-card-text">
+          <p class="hs-card-name hs-fade" id="hsCardName"></p>
+          <p class="hs-card-subtag hs-fade" id="hsCardTag"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Info & CTA -->
+    <div class="hs-right">
+      <div class="hs-info-row">
+        <p class="hs-info-label">Where</p>
+        <p class="hs-info-value hs-fade" id="hsLoc"></p>
+      </div>
+      <div class="hs-info-row">
+        <p class="hs-info-label">Price</p>
+        <p class="hs-info-value hs-fade" id="hsPriceVal"></p>
+        <p class="hs-info-price hs-fade" id="hsPriceSub"></p>
+      </div>
+      <hr class="hs-divider">
+      <button class="hs-book-btn" id="hsBookBtn">
+        <span id="hsBookLabel">Book Hotel</span>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <p class="footer-brand">XENIA HOSPITALITY GROUP</p>
+    <p class="footer-copy" data-i18n="footerCopy">&copy; 2026 Xenia Hospitality Group. All rights reserved.</p>
+    <a href="../" class="back-link">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+        <path d="M10.5 6H1.5M5 2.5 1.5 6 5 9.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span data-i18n="backLink">Back to demo hub</span>
+    </a>
+  </footer>
+
+  <script>
+    // ─── HOTEL SHOWCASE VIDEOS ───────────────────────────────────────────────
+    const HOTEL_VIDEOS = [
+      'video/12829048_1440_2560_60fps.mp4',
+      'video/14723393_1440_2560_24fps.mp4',
+      'video/12802057_1440_2560_30fps.mp4',
+      'video/18316225-uhd_1440_2560_30fps.mp4',
+      'video/13089393_1080_1920_30fps.mp4',
+      'video/15982841_1440_2560_30fps.mp4',
+    ];
+
+    // ─── HOTEL DATA ──────────────────────────────────────────────────────────
+    const HOTELS = [
+      {
+        id: 1, filter: 'bali', category: 'Resort',
+        nameEN: 'Shanaya Sanctuary Hotel & Resorts',
+        nameID: 'Shanaya Sanctuary Hotel & Resorts',
+        locEN: 'Bali, Indonesia', locID: 'Bali, Indonesia',
+        descEN: 'Perched above Bali\'s jungle canopy, Shanaya Sanctuary blends Balinese heritage with modern luxury. Private infinity pools, open-air spa, and villa suites with panoramic rice field views.',
+        descID: 'Berdiri di atas kanopi hutan Bali, Shanaya Sanctuary memadukan warisan Bali dengan kemewahan modern. Kolam renang infinity pribadi, spa terbuka, dan suite villa dengan panorama sawah.',
+        tagEN: 'Jungle Canopy · Bali', tagID: 'Kanopi Hutan · Bali',
+        features: ['Infinity Pool', 'Spa & Wellness', 'Private Villa'],
+        priceEN: 'From IDR 3,500,000 / night', priceID: 'Mulai IDR 3.500.000 / malam',
+        img: 'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?q=80&w=800&auto=format&fit=crop',
+      },
+      {
+        id: 2, filter: 'jakarta', category: 'Boutique Hotel',
+        nameEN: 'Xenia Hotel',
+        nameID: 'Xenia Hotel',
+        locEN: 'Jakarta, Indonesia', locID: 'Jakarta, Indonesia',
+        descEN: 'A refined boutique retreat in the heart of Jakarta. Xenia Hotel offers intimate elegance, curated interiors, and personalized service steps away from the city\'s cultural landmarks.',
+        descID: 'Retreat butik yang elegan di jantung Jakarta. Xenia Hotel menawarkan keanggunan intim, interior terkurasi, dan layanan personal dekat landmark budaya kota.',
+        tagEN: 'City Centre · Jakarta', tagID: 'Pusat Kota · Jakarta',
+        features: ['Rooftop Bar', 'City Views', 'Fine Dining'],
+        priceEN: 'From IDR 2,200,000 / night', priceID: 'Mulai IDR 2.200.000 / malam',
+        img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop',
+      },
+      {
+        id: 3, filter: 'bali', category: 'Heritage Resort',
+        nameEN: 'Monalisa Indonesia',
+        nameID: 'Monalisa Indonesia',
+        locEN: 'Bali, Indonesia', locID: 'Bali, Indonesia',
+        descEN: 'Where Balinese artistry meets contemporary design. Monalisa Indonesia is a heritage resort celebrating local craftsmanship, ancient temple ceremonies, and serene tropical gardens.',
+        descID: 'Di mana seni Bali bertemu desain kontemporer. Monalisa Indonesia merayakan kerajinan lokal, upacara pura kuno, dan taman tropis yang tenang.',
+        tagEN: 'Heritage & Culture · Bali', tagID: 'Warisan & Budaya · Bali',
+        features: ['Cultural Tours', 'Temple Access', 'Tropical Garden'],
+        priceEN: 'From IDR 2,800,000 / night', priceID: 'Mulai IDR 2.800.000 / malam',
+        img: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=800&auto=format&fit=crop',
+      },
+      {
+        id: 4, filter: 'bali', category: 'Garden Villa',
+        nameEN: 'Rana Kusuma',
+        nameID: 'Rana Kusuma',
+        locEN: 'Bali, Indonesia', locID: 'Bali, Indonesia',
+        descEN: 'A sanctuary of stillness nestled among Bali\'s emerald rice terraces. Rana Kusuma\'s garden villas offer complete seclusion, private plunge pools, and farm-to-table dining.',
+        descID: 'Surga keheningan di antara terasering padi zamrud Bali. Vila kebun Rana Kusuma menawarkan ketenangan total, kolam renang pribadi, dan kuliner farm-to-table.',
+        tagEN: 'Rice Terraces · Bali', tagID: 'Sawah Berundak · Bali',
+        features: ['Private Pool', 'Farm Dining', 'Wellness Retreat'],
+        priceEN: 'From IDR 4,100,000 / night', priceID: 'Mulai IDR 4.100.000 / malam',
+        img: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=800&auto=format&fit=crop',
+      },
+      {
+        id: 5, filter: 'surabaya', category: 'Heritage Hotel',
+        nameEN: 'Singhasari Indonesia',
+        nameID: 'Singhasari Indonesia',
+        locEN: 'East Java, Indonesia', locID: 'Jawa Timur, Indonesia',
+        descEN: 'Inspired by the ancient Singhasari Kingdom, this heritage hotel brings East Java\'s royal past to life. Grand architecture, royal suites, and access to Malang\'s historic treasures.',
+        descID: 'Terinspirasi dari Kerajaan Singhasari kuno, hotel warisan ini menghidupkan masa kejayaan Jawa Timur. Arsitektur megah, suite kerajaan, dan akses ke harta bersejarah Malang.',
+        tagEN: 'Royal Heritage · East Java', tagID: 'Warisan Kerajaan · Jawa Timur',
+        features: ['Royal Suites', 'Heritage Tour', 'Grand Ballroom'],
+        priceEN: 'From IDR 1,900,000 / night', priceID: 'Mulai IDR 1.900.000 / malam',
+        img: 'https://images.unsplash.com/photo-1615460549969-36fa19521a4f?q=80&w=800&auto=format&fit=crop',
+      },
+      {
+        id: 6, filter: 'lombok', category: 'Beach Resort',
+        nameEN: 'Shanaya Sanctuary Hotel & Resorts Lombok',
+        nameID: 'Shanaya Sanctuary Hotel & Resorts Lombok',
+        locEN: 'Lombok, Indonesia', locID: 'Lombok, Indonesia',
+        descEN: 'Where the Indian Ocean meets pristine white sand. Shanaya Lombok is an island escape with overwater bungalows, turquoise lagoons, and world-class diving off the Gili Islands.',
+        descID: 'Di mana Samudra Hindia bertemu pasir putih bersih. Shanaya Lombok adalah pelarian pulau dengan bungalo di atas air, laguna biru, dan menyelam kelas dunia di Gili Islands.',
+        tagEN: 'Beachfront · Lombok', tagID: 'Tepi Pantai · Lombok',
+        features: ['Overwater Bungalow', 'Diving & Snorkel', 'Beachfront'],
+        priceEN: 'From IDR 5,200,000 / night', priceID: 'Mulai IDR 5.200.000 / malam',
+        img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop',
+      },
+      {
+        id: 7, filter: 'surabaya', category: 'City Hotel',
+        nameEN: 'Shanaya Sanctuary Hotel & Resorts Surabaya',
+        nameID: 'Shanaya Sanctuary Hotel & Resorts Surabaya',
+        locEN: 'Surabaya, Indonesia', locID: 'Surabaya, Indonesia',
+        descEN: 'The crown jewel of Surabaya\'s skyline. Shanaya Surabaya combines cosmopolitan luxury with Javanese warmth, featuring sky-high dining, an urban spa, and a rooftop infinity pool.',
+        descID: 'Mahkota cakrawala Surabaya. Shanaya Surabaya memadukan kemewahan kosmopolitan dengan kehangatan Jawa, restoran di ketinggian, spa urban, dan kolam renang infinity di rooftop.',
+        tagEN: 'City Skyline · Surabaya', tagID: 'Cakrawala Kota · Surabaya',
+        features: ['Rooftop Pool', 'Sky Dining', 'Urban Spa'],
+        priceEN: 'From IDR 2,600,000 / night', priceID: 'Mulai IDR 2.600.000 / malam',
+        img: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?q=80&w=800&auto=format&fit=crop',
+      },
+    ];
+
+    // ─── I18N ────────────────────────────────────────────────────────────────
+    const I18N = {
+      en: {
+        navSub:      'Hospitality Group',
+        heroEyebrow: 'Luxury. Curated. Exceptional.',
+        heroGroup:   'Hospitality Group',
+        fDest:       'Destination',
+        fCheckin:    'Check-in',
+        fCheckout:   'Check-out',
+        fGuests:     'Guests',
+        fSearch:     'Search',
+        tabAll:      'All Properties',
+        scrollHint:  'Scroll to explore',
+        sLabel:      'Our Properties',
+        sTitle:      'Hotel Collections',
+        footerCopy:  '\u00a9 2026 Xenia Hospitality Group. All rights reserved.',
+        backLink:    'Back to demo hub',
+        explore:     'Explore',
+        allProp:     'All Properties',
+      },
+      id: {
+        navSub:      'Hospitality Group',
+        heroEyebrow: 'Mewah. Terkurasi. Luar Biasa.',
+        heroGroup:   'Hospitality Group',
+        fDest:       'Destinasi',
+        fCheckin:    'Check-in',
+        fCheckout:   'Check-out',
+        fGuests:     'Tamu',
+        fSearch:     'Cari',
+        tabAll:      'Semua Properti',
+        scrollHint:  'Gulir untuk menjelajahi',
+        sLabel:      'Properti Kami',
+        sTitle:      'Koleksi Hotel',
+        footerCopy:  '\u00a9 2026 Xenia Hospitality Group. Seluruh hak cipta dilindungi.',
+        backLink:    'Kembali ke demo hub',
+        explore:     'Jelajahi',
+        allProp:     'Semua Properti',
+      },
+    };
+
+    let lang        = 'en';
+    let activeFilter = 'all';
+    let heroExpanded = false;
+
+    // ─── HOTEL SHOWCASE ──────────────────────────────────────────────────────
+    let hotelIdx = 0;
+
+    function buildNavDots() {
+      document.getElementById('hsNavDots').innerHTML = HOTELS.map((_, i) =>
+        `<div class="hs-dot${i === 0 ? ' active' : ''}" onclick="showHotel(${i})"></div>`
+      ).join('');
+    }
+
+    function showHotel(idx, withFade = true) {
+      const h = HOTELS[idx];
+      const fadeEls = document.querySelectorAll('#hotelsSection .hs-fade');
+
+      function update() {
+        document.getElementById('hsCounter').textContent =
+          String(idx + 1).padStart(2, '0') + ' / ' + String(HOTELS.length).padStart(2, '0');
+        document.getElementById('hsCategory').textContent = h.category;
+        document.getElementById('hsName').textContent = lang === 'en' ? h.nameEN : h.nameID;
+        document.getElementById('hsDesc').textContent = lang === 'en' ? h.descEN : h.descID;
+        document.getElementById('hsFeatures').innerHTML = h.features
+          .map(f => `<span class="hs-feat-chip">${f}</span>`).join('');
+        document.getElementById('hsCardName').textContent = lang === 'en' ? h.nameEN : h.nameID;
+        document.getElementById('hsCardTag').textContent = lang === 'en' ? h.tagEN : h.tagID;
+        // Update center card video
+        const vid = document.getElementById('hsCardVideo');
+        const newSrc = HOTEL_VIDEOS[idx % HOTEL_VIDEOS.length];
+        if (vid.getAttribute('src') !== newSrc) {
+          vid.src = newSrc;
+          vid.load();
+          vid.play().catch(() => {});
+        }
+        document.getElementById('hsLoc').textContent = lang === 'en' ? h.locEN : h.locID;
+        const priceParts = (lang === 'en' ? h.priceEN : h.priceID).split(' / ');
+        document.getElementById('hsPriceVal').textContent = priceParts[0];
+        document.getElementById('hsPriceSub').textContent = priceParts[1] || '';
+        document.getElementById('hsBookLabel').textContent = lang === 'en' ? 'Book Hotel' : 'Pesan Hotel';
+        document.querySelectorAll('.hs-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+      }
+
+      if (withFade) {
+        fadeEls.forEach(el => el.classList.add('fading'));
+        setTimeout(() => { update(); fadeEls.forEach(el => el.classList.remove('fading')); }, 300);
+      } else {
+        update();
+      }
+      hotelIdx = idx;
+    }
+
+    // ─── RENDER: MINI CARDS (inside booking widget) ──────────────────────────
+    function renderMiniCards(filter) {
+      const list = filter === 'all' ? HOTELS : HOTELS.filter(h => h.filter === filter);
+      document.getElementById('miniCards').innerHTML = list.map(h => `
+        <div class="mini-card">
+          <div class="mini-card-img" style="background-image:url('${h.img}')"></div>
+          <div class="mini-card-grad"></div>
+          <div class="mini-card-body">
+            <p class="mini-card-name">${lang === 'en' ? h.nameEN : h.nameID}</p>
+            <p class="mini-card-loc">${lang === 'en' ? h.locEN : h.locID}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ─── APPLY I18N ──────────────────────────────────────────────────────────
+    function applyI18n() {
+      const t = I18N[lang];
+      document.documentElement.lang = lang;
+      document.title = 'Xenia Hospitality Group';
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.dataset.i18n;
+        if (t[k] !== undefined) el.textContent = t[k];
+      });
+
+      // "All Properties" option in destination select
+      const opt = document.querySelector('#fDest option[value=""]');
+      if (opt) opt.textContent = t.allProp;
+
+      // Location tab "All"
+      const allTab = document.querySelector('.ltab[data-filter="all"]');
+      if (allTab) allTab.textContent = t.tabAll;
+
+      document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+      document.getElementById('btnID').classList.toggle('active', lang === 'id');
+
+      // Sync URL
+      const url = new URL(window.location.href);
+      if (lang === 'id') { url.searchParams.set('lang', 'id'); }
+      else { url.searchParams.delete('lang'); }
+      history.replaceState({}, '', url);
+
+      renderMiniCards(activeFilter);
+      showHotel(hotelIdx, false);
+    }
+
+    function setLang(l) { lang = l; applyI18n(); }
+
+    // ─── SCROLL LOGIC ────────────────────────────────────────────────────────
+    function getHeroProgress() {
+      const space = document.getElementById('heroScrollSpace');
+      const max = space.offsetHeight - window.innerHeight;
+      return max > 0 ? Math.max(0, Math.min(1, window.scrollY / max)) : 0;
+    }
+
+    let rafPending = false;
+    window.addEventListener('scroll', () => {
+      if (!rafPending) { requestAnimationFrame(onScroll); rafPending = true; }
+    }, { passive: true });
+
+    function onScroll() {
+      rafPending = false;
+      const p = getHeroProgress();
+      const scrollY = window.scrollY;
+
+      // Nav
+      document.getElementById('nav').classList.toggle('opaque', scrollY > 20);
+
+      // Parallax background
+      document.getElementById('heroBgVideo').style.transform = `translateY(${p * 130}px)`;
+
+      // Fade out headline (0 -> 0.3 progress)
+      const titleOp = Math.max(0, 1 - p * 3.5);
+      const titleTY  = `translateY(${p * -28}px)`;
+      ['heroEyebrow', 'heroTitle', 'heroTitleGroup'].forEach(id => {
+        const el = document.getElementById(id);
+        el.style.opacity   = titleOp;
+        el.style.transform = titleTY;
+      });
+
+      // Scroll indicator fade
+      document.getElementById('scrollHint').style.opacity = Math.max(0, 1 - p * 9);
+
+      // Expand booking at 15% scroll progress
+      const shouldExpand = p > 0.15;
+      if (shouldExpand !== heroExpanded) {
+        heroExpanded = shouldExpand;
+        document.getElementById('bookingExpanded').classList.toggle('open', shouldExpand);
+        document.getElementById('bookingWidget').classList.toggle('is-expanded', shouldExpand);
+        if (shouldExpand) renderMiniCards(activeFilter);
+      }
+    }
+
+    // ─── LOCATION TAB FILTER ─────────────────────────────────────────────────
+    document.getElementById('locationTabs').addEventListener('click', e => {
+      const tab = e.target.closest('.ltab');
+      if (!tab) return;
+      document.querySelectorAll('.ltab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      activeFilter = tab.dataset.filter;
+      renderMiniCards(activeFilter);
+    });
+
+    // ─── CARD FADE-IN (IntersectionObserver) ─────────────────────────────────
+    const cardObserver = new IntersectionObserver(() => {}, {});
+    function observeCards() {}
+
+    // ─── HOTEL NAV EVENTS ────────────────────────────────────────────────────
+    document.getElementById('hsPrev').addEventListener('click', () =>
+      showHotel((hotelIdx - 1 + HOTELS.length) % HOTELS.length)
+    );
+    document.getElementById('hsNext').addEventListener('click', () =>
+      showHotel((hotelIdx + 1) % HOTELS.length)
+    );
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') showHotel((hotelIdx - 1 + HOTELS.length) % HOTELS.length);
+      if (e.key === 'ArrowRight') showHotel((hotelIdx + 1) % HOTELS.length);
+    });
+
+    // ─── DEFAULT DATES ───────────────────────────────────────────────────────
+    function setDefaultDates() {
+      const fmt = d => d.toISOString().split('T')[0];
+      const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
+      const nextWeek = new Date(); nextWeek.setDate(nextWeek.getDate() + 7);
+      document.getElementById('fCheckin').value  = fmt(tomorrow);
+      document.getElementById('fCheckout').value = fmt(nextWeek);
+    }
+
+    // ─── VIDEO PLAYER ────────────────────────────────────────────────────────
+    const VIDEO_LIST = [
+      { src: 'video/18598479-hd_1920_1080_30fps.mp4', label: 'Malang'      },
+      { src: 'video/8960407-hd_1920_1080_30fps.mp4',  label: 'Bali'        },
+      { src: 'video/18023426-hd_1920_1080_25fps.mp4', label: 'Bali'        },
+      { src: 'video/9098389-hd_1920_1080_25fps.mp4',  label: 'Surabaya'    },
+      { src: 'video/14291772_1920_1080_30fps.mp4',    label: 'Lombok'      },
+      { src: 'video/12933205_1280_720_25fps.mp4',     label: 'Budaya Bali' },
+    ];
+    const N_VIDS           = VIDEO_LIST.length;
+    const bgVid            = document.getElementById('heroBgVideo');
+    const heroFade         = document.getElementById('heroFade');
+    const gcEls            = [0,1,2].map(i => document.getElementById('gc'       + i));
+    const gcBadgeEls       = [0,1,2].map(i => document.getElementById('gcbadge' + i));
+    const gcProgEls        = [0,1,2].map(i => document.getElementById('gcprog'  + i));
+    const gcPlayPauseBtn   = document.getElementById('gcPlayPause');
+    const gcPlayPauseIcon  = document.getElementById('gcPlayPauseIcon');
+
+    let vidIdx    = 0;
+    let isPaused  = false;
+    let switching = false;
+
+    const SVG_PAUSE = '<rect x="0" y="0" width="3.5" height="12" rx="1.5" fill="white"/><rect x="6.5" y="0" width="3.5" height="12" rx="1.5" fill="white"/>';
+    const SVG_PLAY  = '<polygon points="1,0 10,6 1,12" fill="white"/>';
+
+    function setGalleryCards(activeIdx) {
+      for (let slot = 0; slot < 3; slot++) {
+        const vIdx = (activeIdx + slot) % N_VIDS;
+        const data = VIDEO_LIST[vIdx];
+        const card = gcEls[slot];
+        const vid  = card.querySelector('.gc-video');
+        gcBadgeEls[slot].textContent = data.label;
+        gcProgEls[slot].style.width  = '0%';
+        if (vid.dataset.loadedSrc !== data.src) {
+          vid.dataset.loadedSrc = data.src;
+          vid.src = data.src;
+          vid.load();
+          vid.addEventListener('loadedmetadata', () => {
+            vid.currentTime = Math.min(2, (vid.duration || 10) * 0.04);
+          }, { once: true });
+        }
+        vid.pause();
+        if (slot === 0) {
+          card.dataset.role = 'active';
+          card.classList.toggle('paused', isPaused);
+        } else {
+          card.dataset.role = slot === 1 ? 'next' : 'next2';
+          card.classList.remove('paused');
+        }
+      }
+    }
+
+    function switchVideo(nextIdx, withFade = true) {
+      if (switching) return;
+      switching = true;
+      vidIdx = ((nextIdx % N_VIDS) + N_VIDS) % N_VIDS;
+      if (!withFade) {
+        bgVid.src = VIDEO_LIST[vidIdx].src;
+        bgVid.muted = true;
+        if (!isPaused) bgVid.play().catch(() => {});
+        setGalleryCards(vidIdx);
+        switching = false;
+        return;
+      }
+      heroFade.classList.add('fading');
+      setTimeout(() => {
+        bgVid.src = VIDEO_LIST[vidIdx].src;
+        bgVid.muted = true;
+        bgVid.play().catch(() => {});
+        setGalleryCards(vidIdx);
+        setTimeout(() => { heroFade.classList.remove('fading'); switching = false; }, 80);
+      }, 350);
+    }
+
+    bgVid.addEventListener('ended', () => switchVideo(vidIdx + 1));
+
+    bgVid.addEventListener('timeupdate', () => {
+      if (bgVid.duration) {
+        gcProgEls[0].style.width = (bgVid.currentTime / bgVid.duration * 100) + '%';
+      }
+    });
+
+    gcPlayPauseBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      isPaused = !isPaused;
+      if (isPaused) {
+        bgVid.pause();
+        gcPlayPauseIcon.innerHTML = SVG_PLAY;
+      } else {
+        bgVid.play().catch(() => {});
+        gcPlayPauseIcon.innerHTML = SVG_PAUSE;
+      }
+      gcEls[0].classList.toggle('paused', isPaused);
+    });
+
+    gcEls[1].addEventListener('click', () => switchVideo((vidIdx + 1) % N_VIDS));
+    gcEls[2].addEventListener('click', () => switchVideo((vidIdx + 2) % N_VIDS));
+
+    // ─── INIT ────────────────────────────────────────────────────────────────
+    (function init() {
+      const params = new URLSearchParams(window.location.search);
+      lang = params.get('lang') === 'id' ? 'id' : 'en';
+      setDefaultDates();
+      buildNavDots();
+      applyI18n();
+      switchVideo(0, false);
+    })();
+  </script>
+</body>
+</html>
