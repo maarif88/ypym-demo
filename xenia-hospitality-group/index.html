@@ -929,7 +929,231 @@
     @media (max-width: 480px) {
       .nav { padding: 0 18px; }
     }
+
+    /* --- MEMBERSHIP SECTION --- */
+    .membership-section {
+      background: #0a0a0a;
+      padding: 96px 32px 112px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .ms-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    /* Left: card slider */
+    .ms-card {
+      border-radius: 24px;
+      padding: 40px 36px;
+      min-height: 530px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .ms-card::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      filter: blur(60px);
+      pointer-events: none;
+    }
+    .ms-card.tier-blue     { background: linear-gradient(135deg, #4A6CF7 0%, #7B3FE4 100%); }
+    .ms-card.tier-gold     { background: linear-gradient(135deg, #C8870A 0%, #7A4F04 60%, #4E3000 100%); }
+    .ms-card.tier-platinum { background: linear-gradient(135deg, #1B1B2F 0%, #2E2E52 50%, #1B1B2F 100%); }
+    .ms-card-symbol {
+      font-size: 26px; font-weight: 300; color: rgba(255,255,255,0.80);
+      line-height: 1; margin-bottom: 20px;
+    }
+    .ms-card-tier-label {
+      font-size: 9px; font-weight: 600; letter-spacing: 0.28em;
+      text-transform: uppercase; color: rgba(255,255,255,0.48);
+      margin-bottom: 4px;
+    }
+    .ms-card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 34px; font-weight: 400; color: white; line-height: 1.1;
+      margin-bottom: 2px;
+    }
+    .ms-card-sub {
+      font-size: 12px; font-weight: 500; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(255,255,255,0.45);
+      margin-bottom: 28px;
+    }
+    .ms-card-divider {
+      width: 36px; height: 1px;
+      background: rgba(255,255,255,0.24);
+      margin-bottom: 24px;
+    }
+    .ms-benefits {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 11px;
+      flex: 1;
+    }
+    .ms-benefit-item {
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .ms-benefit-icon {
+      width: 18px; height: 18px; flex-shrink: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.16);
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+    .ms-benefit-text {
+      font-size: 13px; color: rgba(255,255,255,0.78); line-height: 1.5;
+    }
+    .ms-benefit-text strong { color: white; font-weight: 600; }
+    .ms-card-footer {
+      margin-top: 28px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .ms-dots { display: flex; gap: 8px; }
+    .ms-dot {
+      height: 6px; border-radius: 3px;
+      background: rgba(255,255,255,0.28);
+      cursor: pointer; border: none;
+      transition: background 0.25s, width 0.25s; width: 6px;
+    }
+    .ms-dot.active { background: white; width: 22px; }
+    .ms-nav { display: flex; gap: 8px; }
+    .ms-nav-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.26);
+      background: rgba(255,255,255,0.10);
+      color: white; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .ms-nav-btn:hover { background: rgba(255,255,255,0.22); }
+    /* Right: form */
+    .ms-form-wrap { padding: 8px 0; }
+    .ms-form-eyebrow {
+      font-size: 9px; font-weight: 600; letter-spacing: 0.28em;
+      text-transform: uppercase; color: rgba(255,255,255,0.28);
+      margin-bottom: 12px;
+    }
+    .ms-form-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 46px; font-weight: 400; line-height: 1.1;
+      color: #fafafa; margin-bottom: 14px;
+    }
+    .ms-form-desc {
+      font-size: 14px; color: rgba(255,255,255,0.40); line-height: 1.65;
+      margin-bottom: 32px; max-width: 380px;
+    }
+    .ms-form { display: flex; flex-direction: column; gap: 14px; }
+    .ms-field { display: flex; flex-direction: column; gap: 5px; }
+    .ms-label {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.03em;
+      color: rgba(255,255,255,0.70);
+    }
+    .ms-input, .ms-select {
+      height: 48px; border-radius: 10px;
+      border: 1.5px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.05); padding: 0 16px;
+      font-size: 14px; font-family: 'Inter', system-ui, sans-serif;
+      color: #fafafa; outline: none; width: 100%;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none; -webkit-appearance: none;
+    }
+    .ms-input:focus, .ms-select:focus {
+      border-color: #7B6CF6;
+      box-shadow: 0 0 0 3px rgba(123,108,246,0.18);
+    }
+    .ms-input::placeholder { color: rgba(255,255,255,0.22); }
+    .ms-select option { background: #1a1a2e; color: #fafafa; }
+    .ms-select-wrap { position: relative; }
+    .ms-select-wrap::after {
+      content: '';
+      position: absolute; right: 14px; top: 50%;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid rgba(255,255,255,0.40);
+      pointer-events: none;
+    }
+    .ms-select { cursor: pointer; }
+    .ms-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .ms-check-row {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 12px; color: rgba(255,255,255,0.36); line-height: 1.55;
+      margin-top: 2px; cursor: pointer;
+    }
+    .ms-check-row input[type="checkbox"] {
+      margin-top: 2px; flex-shrink: 0;
+      accent-color: #7B6CF6;
+      cursor: pointer;
+    }
+    .ms-submit-btn {
+      height: 52px; border-radius: 10px;
+      background: #fafafa; color: #0a0a0a;
+      border: none; cursor: pointer;
+      font-size: 14px; font-weight: 600; letter-spacing: 0.06em;
+      font-family: 'Inter', system-ui, sans-serif;
+      transition: opacity 0.2s, transform 0.15s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin-top: 4px;
+    }
+    .ms-submit-btn:hover { opacity: 0.84; transform: translateY(-1px); }
+    .ms-submit-btn:active { transform: translateY(0); }
+    .ms-success {
+      display: none;
+      flex-direction: column; align-items: flex-start;
+      gap: 14px; padding: 8px 0;
+    }
+    .ms-success-icon {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: rgba(22,163,74,0.15);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .ms-success-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px; font-weight: 400; color: #fafafa;
+    }
+    .ms-success-sub {
+      font-size: 14px; color: rgba(255,255,255,0.42); line-height: 1.65;
+      max-width: 360px;
+    }
+    @media (max-width: 900px) {
+      .ms-inner { grid-template-columns: 1fr; gap: 40px; }
+      .ms-card { min-height: 460px; }
+      .ms-form-title { font-size: 36px; }
+      .membership-section { padding: 72px 24px 88px; }
+    }
+    @media (max-width: 580px) {
+      .ms-row { grid-template-columns: 1fr; }
+      .ms-card { padding: 28px 24px; min-height: 410px; }
+      .ms-card-name { font-size: 28px; }
+      .membership-section { padding: 56px 20px 72px; }
+    }
   </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F1KJKZ9L31"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-F1KJKZ9L31');
+  </script>
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "xbbgdkc26a");
+  </script>
+  <!-- Ahrefs Analytics -->
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="O0wMlxlouHoXKUq0lHo2KQ" async></script>
 </head>
 <body>
 
@@ -1167,7 +1391,93 @@
     </div>
   </section>
 
+  <!-- ===== MEMBERSHIP ===== -->
+  <section class="membership-section" id="membershipSection">
+    <div class="ms-inner">
 
+      <!-- Left: Tier Slider -->
+      <div class="ms-slider">
+        <div class="ms-card tier-blue" id="msTierCard">
+          <div class="ms-card-symbol">&#10033;</div>
+          <p class="ms-card-tier-label" id="msTierLabel"></p>
+          <h3 class="ms-card-name" id="msTierName"></h3>
+          <p class="ms-card-sub" id="msTierSub"></p>
+          <div class="ms-card-divider"></div>
+          <ul class="ms-benefits" id="msBenefits"></ul>
+          <div class="ms-card-footer">
+            <div class="ms-dots" id="msDots">
+              <button class="ms-dot" onclick="showTier(0)" aria-label="Blue tier"></button>
+              <button class="ms-dot" onclick="showTier(1)" aria-label="Gold tier"></button>
+              <button class="ms-dot" onclick="showTier(2)" aria-label="Platinum tier"></button>
+            </div>
+            <div class="ms-nav">
+              <button class="ms-nav-btn" id="msPrev" aria-label="Previous tier">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 3L5 7l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="ms-nav-btn" id="msNext" aria-label="Next tier">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Apply Form -->
+      <div class="ms-form-wrap">
+        <p class="ms-form-eyebrow">Xenos Circle Membership</p>
+        <h2 class="ms-form-title">Join Our<br>Inner Circle</h2>
+        <p class="ms-form-desc">Unlock exclusive privileges, curated experiences, and personalized service across all Xenia Hospitality Group properties.</p>
+
+        <form class="ms-form" id="msForm" onsubmit="submitMembership(event)">
+          <div class="ms-row">
+            <div class="ms-field">
+              <label class="ms-label" for="msFirstName">First Name</label>
+              <input class="ms-input" type="text" id="msFirstName" placeholder="Aria" autocomplete="given-name" required>
+            </div>
+            <div class="ms-field">
+              <label class="ms-label" for="msLastName">Last Name</label>
+              <input class="ms-input" type="text" id="msLastName" placeholder="Santoso" autocomplete="family-name" required>
+            </div>
+          </div>
+          <div class="ms-field">
+            <label class="ms-label" for="msEmail">Email Address</label>
+            <input class="ms-input" type="email" id="msEmail" placeholder="aria@example.com" autocomplete="email" required>
+          </div>
+          <div class="ms-field">
+            <label class="ms-label" for="msPhone">Phone Number</label>
+            <input class="ms-input" type="tel" id="msPhone" placeholder="+62 812 0000 0000" autocomplete="tel">
+          </div>
+          <div class="ms-field">
+            <label class="ms-label" for="msTierSelect">Desired Tier</label>
+            <div class="ms-select-wrap">
+              <select class="ms-select" id="msTierSelect">
+                <option value="blue">Xenos Circle Blue - Welcome Tier</option>
+                <option value="gold">Xenos Circle Gold - Second Tier</option>
+                <option value="platinum">Xenos Circle Platinum - Top Tier</option>
+              </select>
+            </div>
+          </div>
+          <label class="ms-check-row">
+            <input type="checkbox" required>
+            I agree to the Xenia Hospitality Group membership terms and privacy policy.
+          </label>
+          <button class="ms-submit-btn" type="submit">
+            Apply for Membership
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </form>
+
+        <div class="ms-success" id="msSuccess">
+          <div class="ms-success-icon">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M4 13l5.5 5.5L22 7" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p class="ms-success-title">Application Received</p>
+          <p class="ms-success-sub">Thank you for applying to Xenos Circle. Our membership team will reach out within 2 business days to complete your enrollment.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
@@ -2062,6 +2372,110 @@
       }, { threshold: 0.1 });
       lmObs.observe(document.getElementById('landmarkSection'));
     })();
+
+    // --- MEMBERSHIP TIER SLIDER ---
+    const TIERS = [
+      {
+        cls: 'tier-blue', tierVal: 'blue',
+        label: 'Welcome Tier', name: 'Xenos Circle', sub: 'Blue',
+        benefits: [
+          { bold: '5% discount',         text: ' on all room rates' },
+          { bold: 'Early check-in',       text: ' when available' },
+          { bold: 'Welcome drink',        text: ' on arrival' },
+          { bold: 'Members-only',         text: ' newsletter and exclusive offers' },
+          { bold: 'Birthday night',       text: ' special offer' },
+        ],
+      },
+      {
+        cls: 'tier-gold', tierVal: 'gold',
+        label: 'Second Tier', name: 'Xenos Circle', sub: 'Gold',
+        benefits: [
+          { bold: 'All Blue benefits',            text: '' },
+          { bold: '12% discount',                 text: ' on all room rates' },
+          { bold: 'Guaranteed early check-in',    text: ' and late check-out' },
+          { bold: 'Complimentary room upgrade',   text: ' when available' },
+          { bold: '15% off',                      text: ' spa treatments and wellness' },
+          { bold: 'Priority reservations',        text: ' across all properties' },
+        ],
+      },
+      {
+        cls: 'tier-platinum', tierVal: 'platinum',
+        label: 'Top Tier', name: 'Xenos Circle', sub: 'Platinum',
+        benefits: [
+          { bold: 'All Gold benefits',              text: '' },
+          { bold: '20% discount',                   text: ' on all room rates' },
+          { bold: 'Guaranteed suite upgrade',        text: '' },
+          { bold: 'Dedicated concierge',             text: ' service 24/7' },
+          { bold: 'Complimentary airport transfer',  text: '' },
+          { bold: 'Monthly complimentary spa',       text: ' treatment' },
+          { bold: 'Exclusive Platinum events',       text: ' and curated experiences' },
+        ],
+      },
+    ];
+
+    let msActiveIdx = 0;
+
+    function showTier(idx, animate) {
+      if (animate === undefined) animate = true;
+      msActiveIdx = idx;
+      var t = TIERS[idx];
+      var card = document.getElementById('msTierCard');
+
+      function applyContent() {
+        card.className = 'ms-card ' + t.cls;
+        document.getElementById('msTierLabel').textContent = t.label;
+        document.getElementById('msTierName').textContent = t.name;
+        document.getElementById('msTierSub').textContent = t.sub;
+        document.getElementById('msBenefits').innerHTML = t.benefits.map(function(b) {
+          return '<li class="ms-benefit-item">'
+            + '<div class="ms-benefit-icon">'
+            + '<svg width="8" height="8" viewBox="0 0 8 8" fill="none">'
+            + '<path d="M1 4l2 2 4-4" stroke="rgba(255,255,255,0.85)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>'
+            + '</svg></div>'
+            + '<span class="ms-benefit-text"><strong>' + b.bold + '</strong>' + b.text + '</span>'
+            + '</li>';
+        }).join('');
+        document.getElementById('msTierSelect').value = t.tierVal;
+        document.querySelectorAll('.ms-dot').forEach(function(d, i) {
+          d.classList.toggle('active', i === idx);
+        });
+      }
+
+      if (animate) {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(10px)';
+        setTimeout(function() {
+          applyContent();
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, 200);
+      } else {
+        applyContent();
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }
+    }
+
+    document.getElementById('msPrev').addEventListener('click', function() {
+      showTier((msActiveIdx - 1 + TIERS.length) % TIERS.length);
+    });
+    document.getElementById('msNext').addEventListener('click', function() {
+      showTier((msActiveIdx + 1) % TIERS.length);
+    });
+
+    document.getElementById('msTierSelect').addEventListener('change', function(e) {
+      var idx = TIERS.findIndex(function(t) { return t.tierVal === e.target.value; });
+      if (idx !== -1 && idx !== msActiveIdx) showTier(idx);
+    });
+
+    function submitMembership(e) {
+      e.preventDefault();
+      document.getElementById('msForm').style.display = 'none';
+      var success = document.getElementById('msSuccess');
+      success.style.display = 'flex';
+    }
+
+    showTier(0, false);
   </script>
 </body>
 </html>
